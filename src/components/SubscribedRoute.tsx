@@ -16,66 +16,67 @@ export default function SubscribedRoute({ children }: { children: React.ReactNod
 
   useEffect(() => {
     let mounted = true
-    supabase.auth.getSession().then(async ({ data }) => {
-      if (!mounted) return
-      if (!data.session) {
-        router.push('/login')
-        return
-      }
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role, suspended')
-        .eq('id', data.session.user.id)
-        .single()
+    ;(async () => {
+      try {
+        const { data } = await supabase.auth.getSession()
+        if (!mounted) return
+        if (!data.session) {
+          router.push('/login')
+          return
+        }
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role, suspended')
+          .eq('id', data.session.user.id)
+          .single()
 
-      if (!mounted) return
-      if (profile?.suspended) {
-        setAllowed(false)
-        setNeedsUpgrade(false)
-        return
-      }
-      if (profile?.role === 'buyer') {
-        router.push('/explore')
-        return
-      }
+        if (!mounted) return
+        if (profile?.suspended) {
+          setAllowed(false)
+          setNeedsUpgrade(false)
+          return
+        }
+        if (profile?.role === 'buyer') {
+          router.push('/explore')
+          return
+        }
 
-      supabase
-        .from('subscriptions')
-        .select('status, trial_ends_at, current_period_ends_at')
-        .eq('user_id', data.session.user.id)
-        .single()
-        .then(({ data: sub }) => {
-          if (!mounted) return
-          const status = sub?.status ?? null
-          const trialEndsAt = sub?.trial_ends_at ?? null
-          const currentPeriodEndsAt = sub?.current_period_ends_at ?? null
+        const { data: sub } = await supabase
+          .from('subscriptions')
+          .select('status, trial_ends_at, current_period_ends_at')
+          .eq('user_id', data.session.user.id)
+          .single()
 
-          const valid =
-            (status === 'trialing' && trialEndsAt && new Date() <= new Date(trialEndsAt)) ||
-            (status === 'active' && (!currentPeriodEndsAt || new Date() <= new Date(currentPeriodEndsAt)))
+        if (!mounted) return
+        const status = sub?.status ?? null
+        const trialEndsAt = sub?.trial_ends_at ?? null
+        const currentPeriodEndsAt = sub?.current_period_ends_at ?? null
 
-          if (valid) {
-            setAllowed(true)
-            setNeedsUpgrade(false)
-            if (status === 'trialing' && trialEndsAt && !trialExpiringTracked.current) {
-              const daysLeft = Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / 86400000)
-              if (daysLeft >= 1 && daysLeft <= 2) {
-                trialExpiringTracked.current = true
-                analytics.trialExpiringSoon({ daysLeft })
-              }
+        const valid =
+          (status === 'trialing' && trialEndsAt && new Date() <= new Date(trialEndsAt)) ||
+          (status === 'active' && (!currentPeriodEndsAt || new Date() <= new Date(currentPeriodEndsAt)))
+
+        if (valid) {
+          setAllowed(true)
+          setNeedsUpgrade(false)
+          if (status === 'trialing' && trialEndsAt && !trialExpiringTracked.current) {
+            const daysLeft = Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / 86400000)
+            if (daysLeft >= 1 && daysLeft <= 2) {
+              trialExpiringTracked.current = true
+              analytics.trialExpiringSoon({ daysLeft })
             }
-          } else {
-            setAllowed(false)
-            setNeedsUpgrade(true)
           }
-        })
-        .catch(() => {
-          if (mounted) {
-            setAllowed(false)
-            setNeedsUpgrade(true)
-          }
-        })
-    })
+        } else {
+          setAllowed(false)
+          setNeedsUpgrade(true)
+        }
+      } catch {
+        if (mounted) {
+          setAllowed(false)
+          setNeedsUpgrade(true)
+        }
+      }
+    })()
     return () => { mounted = false }
   }, [router])
 

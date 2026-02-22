@@ -40,7 +40,7 @@ export function usePushNotifications() {
     if (!reg) reg = await navigator.serviceWorker.register('/sw.js')
     if (!reg) return
     reg = await navigator.serviceWorker.ready
-    const sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToUint8Array(publicKey) })
+    const sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToUint8Array(publicKey) as BufferSource })
     await fetch('/api/push/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },

@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams()
   const reference = searchParams.get('reference')
   const isSubscription = searchParams.get('subscription') === '1'
@@ -79,5 +79,18 @@ export default function SuccessPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex flex-col items-center justify-center bg-background">
+        <div className="absolute top-4 right-4"><ThemeToggle /></div>
+        <p className="text-muted-foreground">Loading...</p>
+      </main>
+    }>
+      <SuccessContent />
+    </Suspense>
   )
 }

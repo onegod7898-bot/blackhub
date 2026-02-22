@@ -38,29 +38,27 @@ export default function ProductDetailContent() {
   useEffect(() => {
     if (!id) return
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-    if (!id || !uuidRegex.test(id)) {
+    if (!uuidRegex.test(id)) {
       setLoading(false)
       return
     }
-    supabase
-      .from('products')
-      .select('*')
-      .eq('id', id)
-      .single()
-        .then(({ data: p }: { data: Product | null }) => {
+    ;(async () => {
+      try {
+        const { data: p } = await supabase.from('products').select('*').eq('id', id).single()
         if (p) analytics.productViewed({ productId: p.id, productName: p.name })
         setProduct(p)
         if (p?.seller_id) {
-          supabase
+          const { data: s } = await supabase
             .from('profiles')
             .select('display_name, company_name, avatar_url')
             .eq('id', p.seller_id)
             .single()
-            .then(({ data: s }: { data: Profile | null }) => setSeller(s))
+          setSeller(s)
         }
+      } finally {
         setLoading(false)
-      })
-      .catch(() => setLoading(false))
+      }
+    })()
   }, [id])
 
   function openInApp() {
