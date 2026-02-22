@@ -14,7 +14,7 @@ function getSupabaseWithAuth(request: NextRequest) {
 
 type SubRow = { status: string; trial_ends_at: string | null; current_period_ends_at: string | null }
 
-async function hasActiveSubscription(supabase: ReturnType<typeof createClient>, userId: string) {
+async function hasActiveSubscription(supabase: NonNullable<ReturnType<typeof getSupabaseWithAuth>>, userId: string) {
   const { data } = await supabase
     .from('subscriptions')
     .select('status, trial_ends_at, current_period_ends_at')
