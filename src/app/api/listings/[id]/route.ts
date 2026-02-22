@@ -12,6 +12,8 @@ function getSupabaseWithAuth(request: NextRequest) {
   )
 }
 
+type SubRow = { status: string; trial_ends_at: string | null; current_period_ends_at: string | null }
+
 async function hasActiveSubscription(supabase: ReturnType<typeof createClient>, userId: string) {
   const { data } = await supabase
     .from('subscriptions')
@@ -19,10 +21,11 @@ async function hasActiveSubscription(supabase: ReturnType<typeof createClient>, 
     .eq('user_id', userId)
     .single()
   if (!data) return false
-  if (data.status === 'trialing' && data.trial_ends_at && new Date() <= new Date(data.trial_ends_at)) return true
-  if (data.status === 'active') {
-    if (!data.current_period_ends_at) return true
-    return new Date() <= new Date(data.current_period_ends_at)
+  const d = data as SubRow
+  if (d.status === 'trialing' && d.trial_ends_at && new Date() <= new Date(d.trial_ends_at)) return true
+  if (d.status === 'active') {
+    if (!d.current_period_ends_at) return true
+    return new Date() <= new Date(d.current_period_ends_at)
   }
   return false
 }
