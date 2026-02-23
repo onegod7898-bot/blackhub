@@ -61,48 +61,50 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24">
-      <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
-        <Logo />
-        <ThemeToggle />
+    <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24 animate-fade-in">
+      <nav className="absolute top-0 left-0 right-0 border-b border-border bg-background/95 backdrop-blur">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </div>
       </nav>
-      <div className="w-full max-w-md">
-        <div className="bg-card rounded-2xl shadow-xl p-8 border border-border">
+      <div className="w-full max-w-md mt-8">
+        <div className="rounded-2xl border border-border bg-card p-8 shadow-lg">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Welcome back</h1>
-            <p className="text-muted-foreground">Sign in to your account</p>
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">Welcome back</h1>
+            <p className="text-muted-foreground mt-1">Sign in to your account</p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-5">
             {error && (
-              <div className="p-4 bg-red-500/10 border-l-4 border-red-500 text-red-600 dark:text-red-400 rounded">
-                <p className="text-sm font-medium">{error}</p>
+              <div className="rounded-xl bg-red-500/10 border border-red-500/30 px-4 py-3">
+                <p className="text-sm font-medium text-red-600 dark:text-red-400">{error}</p>
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Email</label>
+              <label className="block text-sm font-medium text-foreground mb-1.5">Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:ring-2 focus:ring-primary"
+                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground transition-shadow"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Password</label>
+              <label className="block text-sm font-medium text-foreground mb-1.5">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:ring-2 focus:ring-primary"
+                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground transition-shadow"
                 placeholder="••••••••"
               />
-              <Link href="#" onClick={handleResetPassword} className="text-sm text-primary hover:underline mt-1 block">
+              <Link href="#" onClick={handleResetPassword} className="text-sm text-primary hover:underline mt-1.5 inline-block">
                 Forgot password?
               </Link>
             </div>
@@ -110,7 +112,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-primary text-primary-foreground font-medium rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity"
+              className="w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold shadow-sm hover:opacity-90 disabled:opacity-50 transition-opacity"
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
@@ -119,7 +121,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
               Don&apos;t have an account?{' '}
-              <Link href="/signup" className="font-medium text-primary hover:underline">Sign up</Link>
+              <Link href="/signup" className="font-semibold text-primary hover:underline">Sign up</Link>
             </p>
           </div>
         </div>

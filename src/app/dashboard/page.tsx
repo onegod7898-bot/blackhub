@@ -133,30 +133,32 @@ export default function DashboardPage() {
 
   return (
     <SubscribedRoute>
-      <div className="min-h-screen bg-background pb-24">
-        <nav className="bg-card border-b border-border px-4 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Logo />
-            <span className="text-sm text-muted-foreground hidden sm:inline">Dashboard</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <Link href="/profile" className="text-muted-foreground hover:text-foreground">Profile</Link>
-            <Link href="/pricing" className="text-muted-foreground hover:text-foreground">Pricing</Link>
-            <button onClick={async () => { await supabase.auth.signOut(); window.location.href = '/login' }} className="text-muted-foreground hover:text-foreground">
-              Logout
-            </button>
+      <div className="min-h-screen bg-background pb-24 animate-fade-in">
+        <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <Logo />
+              <span className="text-sm text-muted-foreground hidden sm:inline">Dashboard</span>
+            </div>
+            <div className="flex items-center gap-6">
+              <ThemeToggle />
+              <Link href="/profile" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Profile</Link>
+              <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
+              <button onClick={async () => { await supabase.auth.signOut(); window.location.href = '/login' }} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Logout
+              </button>
+            </div>
           </div>
         </nav>
-        <div className="max-w-4xl mx-auto p-6">
-          <h2 className="text-2xl font-bold text-foreground mb-6">My Listings</h2>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+          <h2 className="text-2xl font-bold text-foreground tracking-tight mb-8">My Listings</h2>
 
           <section>
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-semibold text-foreground">Products</h3>
               <button
                 onClick={() => { setShowForm(true); setEditingId(null); setName(''); setDescription(''); setPrice(''); setImageUrl(''); setCategory('general'); }}
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90"
+                className="rounded-xl px-4 py-2.5 bg-primary text-primary-foreground text-sm font-semibold shadow-sm hover:opacity-90 transition-opacity"
               >
                 Add listing
               </button>

@@ -96,11 +96,13 @@ export default function ProductDetailContent() {
 
   return (
     <main className="min-h-screen bg-background pb-24">
-      <nav className="border-b border-border px-4 py-3 flex justify-between items-center">
-        <Logo />
-        <ThemeToggle />
+      <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </div>
       </nav>
-      <div className="max-w-2xl mx-auto p-4">
+      <div className="max-w-2xl mx-auto p-4 sm:p-6">
         <div className="bg-card rounded-2xl border border-border overflow-hidden mb-6">
           <div className="aspect-square bg-muted flex items-center justify-center">
             {product.image_url ? (

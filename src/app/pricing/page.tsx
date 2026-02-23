@@ -51,45 +51,47 @@ export default function PricingPage() {
   const proPrice = currency === 'NGN' ? '₦10,000' : '$19'
 
   return (
-    <main className="min-h-screen bg-background py-12 px-4 pb-24">
-      <nav className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
-        <Logo />
-        <ThemeToggle />
+    <main className="min-h-screen bg-background py-12 px-4 pb-24 animate-fade-in">
+      <nav className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </div>
       </nav>
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-foreground mb-2">BlackHub Pricing</h1>
-          <p className="text-muted-foreground">7-day free trial. No card required to start.</p>
+      <div className="max-w-4xl mx-auto mt-12">
+        <div className="text-center mb-12">
+          <h1 className="text-3xl font-bold text-foreground tracking-tight">Pricing</h1>
+          <p className="text-muted-foreground mt-2">7-day free trial. No card required to start.</p>
           <div className="mt-4 flex justify-center gap-2">
-            <button onClick={() => setCurrency('NGN')} className={`px-4 py-2 rounded-lg ${currency === 'NGN' ? 'bg-primary text-primary-foreground' : 'bg-card border border-border text-muted-foreground'}`}>NGN</button>
-            <button onClick={() => setCurrency('USD')} className={`px-4 py-2 rounded-lg ${currency === 'USD' ? 'bg-primary text-primary-foreground' : 'bg-card border border-border text-muted-foreground'}`}>USD</button>
+            <button onClick={() => setCurrency('NGN')} className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-colors ${currency === 'NGN' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-card border border-border text-muted-foreground hover:text-foreground'}`}>NGN</button>
+            <button onClick={() => setCurrency('USD')} className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-colors ${currency === 'USD' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-card border border-border text-muted-foreground hover:text-foreground'}`}>USD</button>
           </div>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-card rounded-2xl shadow-lg p-8 border border-border">
-            <h2 className="text-2xl font-bold text-foreground mb-2">Starter</h2>
-            <p className="text-muted-foreground mb-6">For individuals</p>
-            <div className="mb-6"><span className="text-4xl font-bold text-foreground">{starterPrice}</span><span className="text-muted-foreground">/month</span></div>
-            <ul className="space-y-3 mb-8 text-muted-foreground">
+          <div className="rounded-2xl border border-border bg-card p-8 shadow-lg">
+            <h2 className="text-xl font-bold text-foreground mb-1">Starter</h2>
+            <p className="text-muted-foreground text-sm mb-6">For individuals</p>
+            <div className="mb-6"><span className="text-3xl font-bold text-foreground">{starterPrice}</span><span className="text-muted-foreground text-sm">/month</span></div>
+            <ul className="space-y-3 mb-8 text-sm text-muted-foreground">
               <li>7-day free trial</li>
               <li>Max 5 listings</li>
               <li>Basic analytics</li>
               <li>Standard support</li>
             </ul>
             {session ? (
-              <button onClick={() => handleSubscribe('starter')} disabled={!!loading} className="w-full py-3 px-4 bg-primary text-primary-foreground font-medium rounded-lg hover:opacity-90 disabled:opacity-50">
+              <button onClick={() => handleSubscribe('starter')} disabled={!!loading} className="w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold shadow-sm hover:opacity-90 disabled:opacity-50 transition-opacity">
                 {loading === 'starter' ? 'Redirecting...' : 'Subscribe with Paystack'}
               </button>
             ) : (
-              <Link href="/signup" className="block w-full py-3 px-4 bg-primary text-primary-foreground font-medium rounded-lg hover:opacity-90 text-center">Start free trial</Link>
+              <Link href="/signup" className="block w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold text-center shadow-sm hover:opacity-90 transition-opacity">Start free trial</Link>
             )}
           </div>
-          <div className="bg-card rounded-2xl shadow-lg p-8 border-2 border-primary relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-primary-foreground text-sm font-medium rounded-full">Pro</div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">Pro</h2>
-            <p className="text-muted-foreground mb-6">For growing businesses</p>
-            <div className="mb-6"><span className="text-4xl font-bold text-foreground">{proPrice}</span><span className="text-muted-foreground">/month</span></div>
-            <ul className="space-y-3 mb-8 text-muted-foreground">
+          <div className="rounded-2xl border-2 border-primary bg-card p-8 shadow-lg relative">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">Pro</div>
+            <h2 className="text-xl font-bold text-foreground mb-1">Pro</h2>
+            <p className="text-muted-foreground text-sm mb-6">For growing businesses</p>
+            <div className="mb-6"><span className="text-3xl font-bold text-foreground">{proPrice}</span><span className="text-muted-foreground text-sm">/month</span></div>
+            <ul className="space-y-3 mb-8 text-sm text-muted-foreground">
               <li>7-day free trial</li>
               <li>Unlimited listings</li>
               <li>Advanced analytics</li>
@@ -97,15 +99,15 @@ export default function PricingPage() {
               <li>Featured placement</li>
             </ul>
             {session ? (
-              <button onClick={() => handleSubscribe('pro')} disabled={!!loading} className="w-full py-3 px-4 bg-primary text-primary-foreground font-medium rounded-lg hover:opacity-90 disabled:opacity-50">
+              <button onClick={() => handleSubscribe('pro')} disabled={!!loading} className="w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold shadow-sm hover:opacity-90 disabled:opacity-50 transition-opacity">
                 {loading === 'pro' ? 'Redirecting...' : 'Subscribe with Paystack'}
               </button>
             ) : (
-              <Link href="/signup" className="block w-full py-3 px-4 bg-primary text-primary-foreground font-medium rounded-lg hover:opacity-90 text-center">Start free trial</Link>
+              <Link href="/signup" className="block w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold text-center shadow-sm hover:opacity-90 transition-opacity">Start free trial</Link>
             )}
           </div>
         </div>
-        <p className="text-center text-muted-foreground mt-8 text-sm">Nigeria: NGN. International: USD.</p>
+        <p className="text-center text-sm text-muted-foreground mt-10">Nigeria: NGN. International: USD.</p>
       </div>
       <BottomNav />
     </main>

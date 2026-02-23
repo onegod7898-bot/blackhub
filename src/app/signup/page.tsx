@@ -79,85 +79,82 @@ export default function SignupPage() {
   if (success) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24">
-        <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
-          <Logo />
-          <ThemeToggle />
-        </nav>
-        <div className="w-full max-w-md bg-card rounded-2xl shadow-xl p-8 text-center border border-border">
-          <div className="mb-6">
-            <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-              <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
+        <nav className="absolute top-0 left-0 right-0 border-b border-border bg-background/95 backdrop-blur">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+            <Logo />
+            <ThemeToggle />
           </div>
-          <h1 className="text-2xl font-bold text-foreground mb-2">Account Created!</h1>
+        </nav>
+        <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 text-center shadow-lg">
+          <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+            <svg className="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h1 className="text-xl font-bold text-foreground mb-2">Account created</h1>
           <p className="text-muted-foreground mb-6">Redirecting to dashboard...</p>
-          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto" />
+          <div className="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent mx-auto" />
         </div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24">
-      <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
-        <Logo />
-        <ThemeToggle />
+    <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24 animate-fade-in">
+      <nav className="absolute top-0 left-0 right-0 border-b border-border bg-background/95 backdrop-blur">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </div>
       </nav>
-      <div className="w-full max-w-md">
-        <div className="bg-card rounded-2xl shadow-xl p-8 border border-border">
+      <div className="w-full max-w-md mt-8">
+        <div className="rounded-2xl border border-border bg-card p-8 shadow-lg">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Create an account</h1>
-            <p className="text-muted-foreground">Choose your role and country</p>
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">Create an account</h1>
+            <p className="text-muted-foreground mt-1">Choose your role and country</p>
           </div>
-          
-          <form onSubmit={handleSignup} className="space-y-6">
+
+          <form onSubmit={handleSignup} className="space-y-5">
             {error && (
-              <div className="p-4 bg-red-500/10 border-l-4 border-red-500 text-red-600 dark:text-red-400 rounded">
-                <p className="text-sm font-medium">{error}</p>
+              <div className="rounded-xl bg-red-500/10 border border-red-500/30 px-4 py-3">
+                <p className="text-sm font-medium text-red-600 dark:text-red-400">{error}</p>
               </div>
             )}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Role</label>
-              <div className="flex gap-4">
+              <label className="block text-sm font-medium text-foreground mb-1.5">Role</label>
+              <div className="flex gap-6">
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="role" checked={role === 'seller'} onChange={() => setRole('seller')} className="rounded-full" />
+                  <input type="radio" name="role" checked={role === 'seller'} onChange={() => setRole('seller')} className="rounded-full border-border text-primary focus:ring-ring" />
                   <span className="text-foreground">Seller</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="role" checked={role === 'buyer'} onChange={() => setRole('buyer')} className="rounded-full" />
+                  <input type="radio" name="role" checked={role === 'buyer'} onChange={() => setRole('buyer')} className="rounded-full border-border text-primary focus:ring-ring" />
                   <span className="text-foreground">Buyer</span>
                 </label>
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Country</label>
+              <label className="block text-sm font-medium text-foreground mb-1.5">Country</label>
               <select value={country} onChange={(e) => setCountry(e.target.value as 'NG' | 'INT')}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:ring-2 focus:ring-primary">
+                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground">
                 <option value="NG">Nigeria (₦)</option>
                 <option value="INT">International ($)</option>
               </select>
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                Email address
-              </label>
+              <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1.5">Email</label>
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:ring-2 focus:ring-primary"
+                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground"
                 placeholder="you@example.com"
               />
             </div>
-
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
+              <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1.5">Password</label>
               <input
                 id="password"
                 type="password"
@@ -165,15 +162,12 @@ export default function SignupPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:ring-2 focus:ring-primary"
+                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground"
                 placeholder="At least 6 characters"
               />
             </div>
-
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                Confirm Password
-              </label>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-foreground mb-1.5">Confirm password</label>
               <input
                 id="confirmPassword"
                 type="password"
@@ -181,7 +175,7 @@ export default function SignupPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:ring-2 focus:ring-primary"
+                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground"
                 placeholder="Confirm your password"
               />
             </div>
@@ -195,7 +189,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-primary text-primary-foreground font-medium rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity"
+              className="w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold shadow-sm hover:opacity-90 disabled:opacity-50 transition-opacity"
             >
               {loading ? 'Creating account...' : 'Create account'}
             </button>
@@ -204,9 +198,7 @@ export default function SignupPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
               Already have an account?{' '}
-              <Link href="/login" className="font-medium text-primary hover:underline">
-                Sign in
-              </Link>
+              <Link href="/login" className="font-semibold text-primary hover:underline">Sign in</Link>
             </p>
           </div>
         </div>
