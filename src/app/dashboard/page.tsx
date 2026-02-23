@@ -7,6 +7,7 @@ import Link from 'next/link'
 import SubscribedRoute from '@/components/SubscribedRoute'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
+import Logo from '@/components/Logo'
 
 const CATEGORIES = ['general', 'electronics', 'fashion', 'home', 'sports']
 
@@ -134,7 +135,10 @@ export default function DashboardPage() {
     <SubscribedRoute>
       <div className="min-h-screen bg-background pb-24">
         <nav className="bg-card border-b border-border px-4 py-3 flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-foreground">BlackHub Dashboard</h1>
+          <div className="flex items-center gap-3">
+            <Logo />
+            <span className="text-sm text-muted-foreground hidden sm:inline">Dashboard</span>
+          </div>
           <div className="flex items-center gap-4">
             <ThemeToggle />
             <Link href="/profile" className="text-muted-foreground hover:text-foreground">Profile</Link>

@@ -6,6 +6,7 @@ import { analytics } from '@/lib/analytics'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
+import Logo from '@/components/Logo'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
@@ -78,7 +79,10 @@ export default function SignupPage() {
   if (success) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24">
-        <div className="absolute top-4 right-4"><ThemeToggle /></div>
+        <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </nav>
         <div className="w-full max-w-md bg-card rounded-2xl shadow-xl p-8 text-center border border-border">
           <div className="mb-6">
             <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
@@ -97,7 +101,10 @@ export default function SignupPage() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24">
-      <div className="absolute top-4 right-4"><ThemeToggle /></div>
+      <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
+        <Logo />
+        <ThemeToggle />
+      </nav>
       <div className="w-full max-w-md">
         <div className="bg-card rounded-2xl shadow-xl p-8 border border-border">
           <div className="text-center mb-8">
@@ -179,6 +186,12 @@ export default function SignupPage() {
               />
             </div>
 
+            <p className="text-xs text-muted-foreground">
+              By creating an account you agree to our{' '}
+              <Link href="/terms" className="text-primary hover:underline">Terms</Link>
+              {' '}and{' '}
+              <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+            </p>
             <button
               type="submit"
               disabled={loading}

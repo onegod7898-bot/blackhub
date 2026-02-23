@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
+import Logo from '@/components/Logo'
 
 export default function SellerProfilePage() {
   const params = useParams()
@@ -47,7 +48,10 @@ export default function SellerProfilePage() {
 
   return (
     <main className="min-h-screen bg-background pb-24">
-      <div className="absolute top-4 right-4 z-10"><ThemeToggle /></div>
+      <nav className="border-b border-border px-4 py-3 flex justify-between items-center">
+        <Logo />
+        <ThemeToggle />
+      </nav>
       <div className="max-w-2xl mx-auto p-4">
         <div className="bg-card rounded-2xl border border-border p-6 text-center mb-6">
           {profile?.avatar_url ? (

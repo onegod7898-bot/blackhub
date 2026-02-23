@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
+import Logo from '@/components/Logo'
 
 function SuccessContent() {
   const searchParams = useSearchParams()
@@ -38,7 +39,10 @@ function SuccessContent() {
   if (loading) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center bg-background">
-        <div className="absolute top-4 right-4"><ThemeToggle /></div>
+        <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </nav>
         <p className="text-muted-foreground">Verifying payment...</p>
       </main>
     )
@@ -46,7 +50,10 @@ function SuccessContent() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-background">
-      <div className="absolute top-4 right-4"><ThemeToggle /></div>
+      <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
+        <Logo />
+        <ThemeToggle />
+      </nav>
       <div className="text-center">
         <h1 className="text-4xl font-bold text-green-500 mb-4">
           Payment Successful!
@@ -86,7 +93,10 @@ export default function SuccessPage() {
   return (
     <Suspense fallback={
       <main className="min-h-screen flex flex-col items-center justify-center bg-background">
-        <div className="absolute top-4 right-4"><ThemeToggle /></div>
+        <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </nav>
         <p className="text-muted-foreground">Loading...</p>
       </main>
     }>

@@ -7,6 +7,7 @@ import ProtectedRoute from '@/components/ProtectedRoute'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
+import Logo from '@/components/Logo'
 
 interface Message {
   id: string
@@ -117,7 +118,10 @@ function MessagesContent({
 
   return (
     <main className="min-h-screen bg-background pb-24">
-      <div className="absolute top-4 right-4 z-10"><ThemeToggle /></div>
+      <nav className="border-b border-border px-4 py-3 flex justify-between items-center">
+        <Logo />
+        <ThemeToggle />
+      </nav>
       <div className="max-w-2xl mx-auto p-4">
         <h1 className="text-2xl font-bold text-foreground mb-6">Messages</h1>
         {messages.length === 0 ? (

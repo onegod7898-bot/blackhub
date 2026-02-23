@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
+import Logo from '@/components/Logo'
 
 export default function PricingPage() {
   const [session, setSession] = useState<any>(null)
@@ -51,7 +52,10 @@ export default function PricingPage() {
 
   return (
     <main className="min-h-screen bg-background py-12 px-4 pb-24">
-      <div className="absolute top-4 right-4"><ThemeToggle /></div>
+      <nav className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+        <Logo />
+        <ThemeToggle />
+      </nav>
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-foreground mb-2">BlackHub Pricing</h1>

@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { isActiveAccess } from '@/lib/subscription'
 import ThemeToggle from '@/components/ThemeToggle'
+import Logo from '@/components/Logo'
 
 export default function SubscribedRoute({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -90,7 +91,10 @@ export default function SubscribedRoute({ children }: { children: React.ReactNod
   if (!allowed && !needsUpgrade) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24">
-        <div className="absolute top-4 right-4"><ThemeToggle /></div>
+        <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </nav>
         <div className="w-full max-w-md bg-card rounded-2xl shadow-xl p-8 text-center border border-border">
           <div className="mb-6 mx-auto w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center">
             <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,7 +110,10 @@ export default function SubscribedRoute({ children }: { children: React.ReactNod
   if (!allowed && needsUpgrade) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24">
-        <div className="absolute top-4 right-4"><ThemeToggle /></div>
+        <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </nav>
         <div className="w-full max-w-md bg-card rounded-2xl shadow-xl p-8 text-center border border-border">
           <div className="mb-6 mx-auto w-20 h-20 bg-amber-500/20 rounded-full flex items-center justify-center">
             <svg className="w-10 h-10 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -9,6 +9,7 @@ import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
 import ShareProductButton from '@/components/ShareProductButton'
 import ContactSellerForm from '@/components/ContactSellerForm'
+import Logo from '@/components/Logo'
 
 const PLAY_STORE_URL = process.env.NEXT_PUBLIC_PLAY_STORE_URL || 'https://play.google.com/store/apps/details?id=com.blackhub.app'
 
@@ -80,7 +81,10 @@ export default function ProductDetailContent() {
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
-        <ThemeToggle />
+        <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
+          <Logo />
+          <ThemeToggle />
+        </nav>
         <h1 className="text-xl font-bold text-foreground mb-2">Product Not Found</h1>
         <p className="text-muted-foreground mb-4">This product may have been removed or the link is invalid.</p>
         <Link href="/" className="text-primary hover:underline">Back to Home</Link>
@@ -92,7 +96,10 @@ export default function ProductDetailContent() {
 
   return (
     <main className="min-h-screen bg-background pb-24">
-      <div className="absolute top-4 right-4 z-10"><ThemeToggle /></div>
+      <nav className="border-b border-border px-4 py-3 flex justify-between items-center">
+        <Logo />
+        <ThemeToggle />
+      </nav>
       <div className="max-w-2xl mx-auto p-4">
         <div className="bg-card rounded-2xl border border-border overflow-hidden mb-6">
           <div className="aspect-square bg-muted flex items-center justify-center">

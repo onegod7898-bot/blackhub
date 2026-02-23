@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import ThemeToggle from '@/components/ThemeToggle'
+import Logo from '@/components/Logo'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -72,7 +73,10 @@ export default function AdminPage() {
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-background p-6 pb-24">
-        <div className="absolute top-4 right-4"><ThemeToggle /></div>
+        <nav className="border-b border-border px-4 py-3 flex justify-between items-center mb-6">
+          <Logo />
+          <ThemeToggle />
+        </nav>
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl font-bold text-foreground">Admin Panel (CEO Only)</h1>

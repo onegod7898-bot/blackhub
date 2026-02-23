@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
+import Logo from '@/components/Logo'
 
 const CATEGORIES = ['all', 'electronics', 'fashion', 'home', 'sports', 'general']
 
@@ -42,6 +43,7 @@ export default function ExplorePage() {
   return (
     <main className="min-h-screen bg-background pb-24">
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border px-4 py-3 flex items-center gap-4">
+        <Logo className="shrink-0" />
         <ThemeToggle />
         <input
           type="text"

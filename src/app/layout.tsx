@@ -2,11 +2,16 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import FirebaseProvider from "@/components/FirebaseProvider";
 import NotificationPrompt from "@/components/NotificationPrompt";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "BlackHub - Subscription Marketplace",
   description: "Global subscription-based marketplace for buyers and sellers",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -26,7 +31,10 @@ export default function RootLayout({
       <body className="antialiased min-h-screen bg-background text-foreground font-sans">
         <ThemeProvider>
           <FirebaseProvider>
-            {children}
+            <div className="flex flex-col min-h-screen">
+              <div className="flex-1">{children}</div>
+              <Footer />
+            </div>
             <NotificationPrompt />
           </FirebaseProvider>
         </ThemeProvider>

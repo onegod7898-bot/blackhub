@@ -6,6 +6,7 @@ import { analytics } from '@/lib/analytics'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
+import Logo from '@/components/Logo'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -61,9 +62,10 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24">
-      <div className="absolute top-4 right-4">
+      <nav className="absolute top-4 left-4 right-4 flex justify-between items-center">
+        <Logo />
         <ThemeToggle />
-      </div>
+      </nav>
       <div className="w-full max-w-md">
         <div className="bg-card rounded-2xl shadow-xl p-8 border border-border">
           <div className="text-center mb-8">
