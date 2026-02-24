@@ -139,8 +139,8 @@ export default function SubscribedRoute({ children }: { children: React.ReactNod
           <ThemeToggle />
         </nav>
         <div className="w-full max-w-md bg-card/50 backdrop-blur-xl rounded-3xl p-10 text-center border border-border/50 shadow-2xl shadow-primary/5">
-          <div className="mb-6 mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/10 flex items-center justify-center">
-            <svg className="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="mb-6 mx-auto w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+            <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>

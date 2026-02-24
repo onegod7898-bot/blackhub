@@ -60,11 +60,11 @@ export default function PricingPage() {
     <main className="min-h-screen bg-background py-12 px-4 pb-24 animate-fade-in">
       <header className="sticky top-0 z-50 nav-premium">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-14 lg:h-16 items-center justify-between">
+          <div className="flex h-16 items-center justify-between">
             <Logo />
             <div className="flex items-center gap-4">
               <ThemeToggle />
-              {!session && <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground">Log in</Link>}
+              {!session && <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground rounded-xl px-4 py-2 transition-colors">Log in</Link>}
             </div>
           </div>
         </div>

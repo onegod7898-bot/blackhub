@@ -7,7 +7,7 @@ import Link from 'next/link'
 import SubscribedRoute from '@/components/SubscribedRoute'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
-import Logo from '@/components/Logo'
+import DashboardSidebar from '@/components/DashboardSidebar'
 
 const CATEGORIES = ['general', 'electronics', 'fashion', 'home', 'sports']
 
@@ -168,56 +168,70 @@ export default function DashboardPage() {
 
   return (
     <SubscribedRoute>
-      <div className="min-h-screen bg-background pb-24 animate-fade-in">
-        <header className="sticky top-0 z-50 nav-premium">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-14 lg:h-16 items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Logo />
-              <span className="text-sm text-muted-foreground hidden sm:inline">Dashboard</span>
-            </div>
-            <div className="flex items-center gap-6">
+      <div className="min-h-screen bg-background flex pb-24 lg:pb-0 animate-fade-in">
+        <DashboardSidebar />
+        <div className="flex-1 flex flex-col min-w-0">
+          <header className="sticky top-0 z-40 flex h-16 items-center justify-between gap-4 border-b border-border bg-background/95 backdrop-blur-xl px-4 sm:px-6 lg:px-8">
+            <h1 className="text-lg font-semibold text-foreground">Dashboard</h1>
+            <div className="flex items-center gap-4">
               <ThemeToggle />
-              <Link href="/profile" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Profile</Link>
-              <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
-              <button onClick={async () => { await supabase.auth.signOut(); window.location.href = '/login' }} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Logout
+              <Link href="/profile" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Profile</Link>
+              <button onClick={async () => { await supabase.auth.signOut(); window.location.href = '/login' }} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                Log out
               </button>
             </div>
-          </div>
-          </div>
-        </header>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          </header>
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
           {/* Analytics cards */}
-          {analyticsData && (
+          {loading ? (
+            <section className="mb-10">
+              <div className="h-6 skeleton w-32 mb-6" />
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="rounded-xl border border-border bg-card p-6">
+                    <div className="h-4 skeleton w-20 mb-3" />
+                    <div className="h-8 skeleton w-24" />
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-xl border border-border bg-card p-6 h-40">
+                <div className="h-4 skeleton w-40 mb-4" />
+                <div className="flex items-end gap-2 h-28">
+                  {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+                    <div key={i} className="flex-1 skeleton rounded-t" style={{ height: `${Math.random() * 60 + 20}%` }} />
+                  ))}
+                </div>
+              </div>
+            </section>
+          ) : analyticsData && (
             <section className="mb-10">
               <h2 className="text-xl font-bold text-foreground mb-4">Analytics</h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <div className="card-feature rounded-2xl border border-border bg-card p-6 glass">
+                <div className="card-elevated rounded-xl border border-border bg-card p-6">
                   <p className="text-sm text-muted-foreground mb-1">Revenue</p>
                   <p className="text-2xl font-bold text-foreground">${analyticsData.revenue.toFixed(2)}</p>
                 </div>
-                <div className="card-feature rounded-2xl border border-border bg-card p-6 glass">
+                <div className="card-elevated rounded-xl border border-border bg-card p-6">
                   <p className="text-sm text-muted-foreground mb-1">Customers</p>
                   <p className="text-2xl font-bold text-foreground">{analyticsData.customers}</p>
                 </div>
-                <div className="card-feature rounded-2xl border border-border bg-card p-6 glass">
+                <div className="card-elevated rounded-xl border border-border bg-card p-6">
                   <p className="text-sm text-muted-foreground mb-1">Sales</p>
                   <p className="text-2xl font-bold text-foreground">{analyticsData.salesCount}</p>
                 </div>
-                <div className="card-feature rounded-2xl border border-border bg-card p-6 glass">
+                <div className="card-elevated rounded-xl border border-border bg-card p-6">
                   <p className="text-sm text-muted-foreground mb-1">Listings</p>
                   <p className="text-2xl font-bold text-foreground">{listings.length}</p>
                 </div>
               </div>
               {analyticsData.chartData?.length > 0 && (
-                <div className="card-feature rounded-2xl border border-border bg-card p-6 glass mb-6">
+                <div className="card-elevated rounded-xl border border-border bg-card p-6 mb-6">
                   <h3 className="text-sm font-semibold text-foreground mb-4">Revenue (last 7 days)</h3>
                   <div className="flex items-end gap-2 h-32">
                     {analyticsData.chartData.map((d, i) => (
                       <div key={d.date} className="flex-1 flex flex-col items-center gap-1">
                         <div
-                          className="w-full rounded-t bg-primary/60 min-h-[4px] transition-all duration-300"
+                          className="w-full rounded-t bg-primary/70 min-h-[4px] transition-all duration-300"
                           style={{ height: `${(d.revenue / maxChart) * 100}%` }}
                         />
                         <span className="text-xs text-muted-foreground">{d.date.slice(5)}</span>
@@ -227,22 +241,22 @@ export default function DashboardPage() {
                 </div>
               )}
               {analyticsData.transactions?.length > 0 && (
-                <div className="card-feature rounded-2xl border border-border bg-card p-6 glass">
+                <div className="card-elevated rounded-xl border border-border bg-card p-6">
                   <h3 className="text-sm font-semibold text-foreground mb-4">Recent transactions</h3>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-border">
-                          <th className="text-left py-2 text-muted-foreground font-medium">ID</th>
-                          <th className="text-left py-2 text-muted-foreground font-medium">Status</th>
-                          <th className="text-left py-2 text-muted-foreground font-medium">Date</th>
+                          <th className="text-left py-3 text-muted-foreground font-medium">ID</th>
+                          <th className="text-left py-3 text-muted-foreground font-medium">Status</th>
+                          <th className="text-left py-3 text-muted-foreground font-medium">Date</th>
                         </tr>
                       </thead>
                       <tbody>
                         {analyticsData.transactions.slice(0, 5).map((t) => (
                           <tr key={t.id} className="border-b border-border/50">
                             <td className="py-3 text-foreground font-mono text-xs">{t.id.slice(0, 12)}...</td>
-                            <td className="py-3"><span className={`px-2 py-0.5 rounded-full text-xs ${t.status === 'pending' ? 'bg-amber-500/20 text-amber-600' : 'bg-green-500/20 text-green-600'}`}>{t.status}</span></td>
+                            <td className="py-3"><span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${t.status === 'pending' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'}`}>{t.status}</span></td>
                             <td className="py-3 text-muted-foreground">{new Date(t.date).toLocaleDateString()}</td>
                           </tr>
                         ))}
@@ -258,7 +272,7 @@ export default function DashboardPage() {
           {referralData && (
             <section className="mb-10">
               <h2 className="text-xl font-bold text-foreground mb-4">Referral program</h2>
-              <div className="card-feature rounded-2xl border border-border bg-card p-6 glass">
+              <div className="card-elevated rounded-xl border border-border bg-card p-6">
                 <p className="text-sm text-muted-foreground mb-2">Share your link. Earn ₦5 or $0.05 for every seller who signs up.</p>
                 <div className="flex flex-wrap gap-3 items-center">
                   <input
@@ -266,7 +280,7 @@ export default function DashboardPage() {
                     value={referralData.referralLink}
                     className="flex-1 min-w-[200px] px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm"
                   />
-                  <button onClick={copyReferralLink} className="btn-saas rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
+                  <button onClick={copyReferralLink} className="btn-primary rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
                     {copied ? 'Copied!' : 'Copy link'}
                   </button>
                 </div>
@@ -281,14 +295,14 @@ export default function DashboardPage() {
               <h2 className="text-2xl font-bold text-foreground tracking-tight">My Listings</h2>
               <button
                 onClick={() => { setShowForm(true); setEditingId(null); setName(''); setDescription(''); setPrice(''); setImageUrl(''); setCategory('general'); }}
-                className="btn-saas rounded-xl px-5 py-3 bg-primary text-primary-foreground font-semibold shadow-sm hover:shadow-primary/25 w-full sm:w-auto"
+                className="btn-primary rounded-xl px-5 py-3 bg-primary text-primary-foreground font-semibold w-full sm:w-auto"
               >
                 + List product
               </button>
             </div>
 
             {showForm && (
-              <form onSubmit={handleSubmit} className="card-feature rounded-2xl border border-border bg-card p-6 glass mb-8 space-y-4">
+              <form onSubmit={handleSubmit} className="card-elevated rounded-xl border border-border bg-card p-6 mb-8 space-y-4">
                 <h3 className="text-lg font-semibold text-foreground mb-4">{editingId ? 'Edit listing' : 'New listing'}</h3>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1">Product image</label>
@@ -317,8 +331,13 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <button type="submit" disabled={saving} className="btn-saas rounded-xl px-5 py-2.5 bg-primary text-primary-foreground font-semibold disabled:opacity-50">
-                    {saving ? 'Saving...' : editingId ? 'Update listing' : 'Create listing'}
+                  <button type="submit" disabled={saving} className="btn-primary rounded-xl px-5 py-2.5 bg-primary text-primary-foreground font-semibold disabled:opacity-50">
+                    {saving ? (
+                      <span className="inline-flex items-center gap-2">
+                        <span className="animate-spin rounded-full h-4 w-4 border-2 border-primary-foreground border-t-transparent" />
+                        Saving...
+                      </span>
+                    ) : editingId ? 'Update listing' : 'Create listing'}
                   </button>
                   <button type="button" onClick={() => { setShowForm(false); setEditingId(null); }} className="rounded-xl px-5 py-2.5 border border-border text-foreground hover:bg-muted transition-colors">
                     Cancel
@@ -328,19 +347,30 @@ export default function DashboardPage() {
             )}
 
             {loading ? (
-              <p className="text-muted-foreground">Loading...</p>
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="rounded-xl border border-border bg-card p-4 flex gap-4">
+                    <div className="w-16 h-16 skeleton rounded-xl" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 skeleton w-1/3" />
+                      <div className="h-3 skeleton w-1/2" />
+                      <div className="h-5 skeleton w-20" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : listings.length === 0 ? (
-              <div className="card-feature rounded-2xl border border-border bg-card p-12 text-center glass">
+              <div className="card-elevated rounded-xl border border-border bg-card p-12 text-center">
                 <p className="text-muted-foreground mb-6">You haven't listed any products yet.</p>
-                <button onClick={() => { setShowForm(true); setEditingId(null); setName(''); setDescription(''); setPrice(''); setImageUrl(''); setCategory('general'); }} className="btn-saas rounded-xl px-6 py-3 bg-primary text-primary-foreground font-semibold shadow-sm hover:shadow-primary/25">
+                <button onClick={() => { setShowForm(true); setEditingId(null); setName(''); setDescription(''); setPrice(''); setImageUrl(''); setCategory('general'); }} className="btn-primary rounded-xl px-6 py-3 bg-primary text-primary-foreground font-semibold">
                   + List your first product
                 </button>
               </div>
             ) : (
               <div className="space-y-4">
-                <ul className="space-y-4">
+                <ul className="space-y-4" id="listings">
                   {listings.map((l) => (
-                    <li key={l.id} className="card-feature rounded-2xl border border-border bg-card p-4 glass flex justify-between items-start gap-4">
+                    <li key={l.id} className="card-elevated rounded-xl border border-border bg-card p-4 flex justify-between items-start gap-4">
                       <div className="flex gap-4 flex-1 min-w-0">
                         {l.image_url ? <img src={l.image_url} alt={l.name} className="w-16 h-16 object-cover rounded-xl" /> : <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center text-2xl">📦</div>}
                         <div className="min-w-0">
@@ -362,6 +392,7 @@ export default function DashboardPage() {
               </div>
             )}
           </section>
+          </main>
         </div>
       </div>
       <BottomNav />

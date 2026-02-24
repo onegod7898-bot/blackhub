@@ -74,9 +74,20 @@ export default function ProductDetailContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-      </div>
+      <main className="min-h-screen bg-background pb-24">
+        <div className="sticky top-0 z-50 nav-premium h-16" />
+        <div className="max-w-2xl mx-auto p-4 sm:p-6">
+          <div className="rounded-xl overflow-hidden">
+            <div className="aspect-square skeleton" />
+            <div className="p-6 space-y-4">
+              <div className="h-8 skeleton w-3/4" />
+              <div className="h-6 skeleton w-1/4" />
+              <div className="h-4 skeleton w-full" />
+              <div className="h-4 skeleton w-2/3" />
+            </div>
+          </div>
+        </div>
+      </main>
     )
   }
 
@@ -107,7 +118,7 @@ export default function ProductDetailContent() {
         </div>
       </header>
       <div className="max-w-2xl mx-auto p-4 sm:p-6">
-        <div className="bg-card rounded-2xl border border-border overflow-hidden mb-6">
+        <div className="card-elevated rounded-xl border border-border bg-card overflow-hidden mb-6">
           <div className="aspect-square bg-muted flex items-center justify-center">
             {product.image_url ? (
               <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
@@ -133,7 +144,7 @@ export default function ProductDetailContent() {
           />
         </div>
 
-        <Link href={`/seller/${product.seller_id}`} className="block card-feature rounded-2xl border border-border bg-card p-4 mb-6 glass">
+        <Link href={`/seller/${product.seller_id}`} className="block card-elevated rounded-xl border border-border bg-card p-4 mb-6">
           <div className="flex items-center gap-4">
             {seller?.avatar_url ? (
               <img src={seller.avatar_url} alt="" className="w-12 h-12 rounded-full object-cover" />
@@ -156,7 +167,7 @@ export default function ProductDetailContent() {
           <div className="flex flex-col gap-2">
             <button
               onClick={openInApp}
-              className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
+              className="btn-primary w-full py-3 bg-primary text-primary-foreground rounded-xl font-semibold"
             >
               Open in App
             </button>
