@@ -2,8 +2,8 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-muted/30 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="border-t border-border bg-card/50 mt-auto">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <span className="font-semibold text-foreground text-lg tracking-tight">BlackHub</span>
           <nav className="flex flex-wrap gap-8 text-sm">

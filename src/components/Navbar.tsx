@@ -16,7 +16,7 @@ export default function Navbar({ transparent = false, showAuth = true }: NavbarP
         transparent ? 'bg-background/80 backdrop-blur-xl border-b border-border/40' : 'nav-premium'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-8">
           <Logo />
           <nav className="flex items-center gap-1">

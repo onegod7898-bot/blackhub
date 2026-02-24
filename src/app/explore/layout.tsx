@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Explore Products',
@@ -10,5 +11,5 @@ export const metadata: Metadata = {
 }
 
 export default function ExploreLayout({ children }: { children: React.ReactNode }) {
-  return children
+  return <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center"><div className="spinner" /></div>}>{children}</Suspense>
 }

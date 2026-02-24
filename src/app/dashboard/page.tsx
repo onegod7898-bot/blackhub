@@ -8,6 +8,7 @@ import SubscribedRoute from '@/components/SubscribedRoute'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
 import DashboardSidebar from '@/components/DashboardSidebar'
+import EmptyState from '@/components/EmptyState'
 import { useToast } from '@/contexts/ToastContext'
 
 const CATEGORIES = ['general', 'electronics', 'fashion', 'home', 'sports']
@@ -178,10 +179,15 @@ export default function DashboardPage() {
     <SubscribedRoute>
       <div className="min-h-screen bg-background flex pb-24 lg:pb-0 animate-fade-in">
         <DashboardSidebar />
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 lg:pl-60">
           <header className="sticky top-0 z-40 flex h-16 items-center justify-between gap-4 border-b border-border bg-background/95 backdrop-blur-xl px-4 sm:px-6 lg:px-8">
             <h1 className="text-lg font-semibold text-foreground">Dashboard</h1>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <Link href="/messages" className="p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors" aria-label="Messages">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+              </Link>
               <ThemeToggle />
               <Link href="/profile" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Profile</Link>
               <button onClick={async () => { await supabase.auth.signOut(); window.location.href = '/login' }} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
@@ -189,7 +195,7 @@ export default function DashboardPage() {
               </button>
             </div>
           </header>
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto max-w-[1280px]">
           {/* Analytics cards */}
           {loading ? (
             <section className="mb-10">
@@ -368,12 +374,13 @@ export default function DashboardPage() {
                 ))}
               </div>
             ) : listings.length === 0 ? (
-              <div className="card-elevated rounded-xl border border-border bg-card p-12 text-center">
-                <p className="text-muted-foreground mb-6">You haven't listed any products yet.</p>
-                <button onClick={() => { setShowForm(true); setEditingId(null); setName(''); setDescription(''); setPrice(''); setImageUrl(''); setCategory('general'); }} className="btn-primary rounded-xl px-6 py-3 bg-primary text-primary-foreground font-semibold">
-                  + List your first product
-                </button>
-              </div>
+              <EmptyState
+                title="No listings yet"
+                description="List your first product to start selling on BlackHub. It only takes a minute."
+                ctaLabel="+ List your first product"
+                onCtaClick={() => { setShowForm(true); setEditingId(null); setName(''); setDescription(''); setPrice(''); setImageUrl(''); setCategory('general'); }}
+                illustration="listings"
+              />
             ) : (
               <div className="space-y-4">
                 <ul className="space-y-4" id="listings">

@@ -54,8 +54,12 @@ function ToastContainer({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`pointer-events-auto rounded-xl border px-4 py-3 shadow-xl animate-fade-in flex items-center justify-between gap-3 ${
-            t.type === 'success' ? 'border-emerald-500/30 bg-emerald-500/10' : t.type === 'error' ? 'border-red-500/30 bg-red-500/10' : 'border-border bg-card'
+          className={`pointer-events-auto rounded-xl border px-4 py-3 shadow-xl animate-fade-in flex items-center justify-between gap-3 backdrop-blur-sm ${
+            t.type === 'success'
+              ? 'border-[var(--success)]/40 bg-[var(--success)]/15'
+              : t.type === 'error'
+              ? 'border-red-500/30 bg-red-500/10'
+              : 'border-border bg-card'
           }`}
         >
           <span className="text-sm font-medium text-foreground">{t.message}</span>

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Logo from '@/components/Logo'
 
 const navItems = [
   { href: '/dashboard', label: 'Overview', icon: 'overview' },
@@ -43,10 +44,10 @@ export default function DashboardSidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="hidden lg:flex flex-col w-56 border-r border-border bg-card min-h-screen">
+    <aside className="hidden lg:flex flex-col w-60 border-r border-border bg-card min-h-screen fixed left-0 top-0 bottom-0 z-30">
       <div className="p-6 border-b border-border">
-        <Link href="/" className="font-bold text-xl text-foreground tracking-tight">BlackHub</Link>
-        <p className="text-xs text-muted-foreground mt-1">Seller Dashboard</p>
+        <Logo variant="full" />
+        <p className="text-xs text-muted-foreground mt-2">Seller Dashboard</p>
       </div>
       <nav className="flex-1 p-4 space-y-1">
         {navItems.map((item) => {

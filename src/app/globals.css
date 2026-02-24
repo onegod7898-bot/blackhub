@@ -1,59 +1,59 @@
 @import "tailwindcss";
 
 /* ========== BlackHub Design System ========== */
-/* Premium fintech: Wealth, growth, confidence | Emerald green + neutral gray */
+/* Premium fintech marketplace: Dark luxury, emerald accent, investor-ready */
+
+/* Dark Mode (default) - Deep black, emerald accent */
+:root,
+.dark {
+  --background: #0B0B0F;
+  --foreground: #F4F4F5;
+  --heading: #FAFAFA;
+  --card: #121218;
+  --card-foreground: #F4F4F5;
+  --primary: #10B981;
+  --primary-hover: #34D399;
+  --primary-foreground: #FFFFFF;
+  --primary-glow: rgba(16, 185, 129, 0.35);
+  --accent: #10B981;
+  --success: #10B981;
+  --secondary: #1A1A20;
+  --secondary-foreground: #E4E4E7;
+  --muted: #18181C;
+  --muted-foreground: #A1A1AA;
+  --border: #1E1E26;
+  --ring: #10B981;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+  --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+  --nav-bg: rgba(11, 11, 15, 0.95);
+}
 
 /* Light Mode - Soft white, emerald primary */
-:root,
 .light {
   --background: #FAFAFA;
-  --foreground: #111827;
-  --heading: #111827;
+  --foreground: #18181B;
+  --heading: #09090B;
   --card: #FFFFFF;
-  --card-foreground: #111827;
+  --card-foreground: #18181B;
   --primary: #059669;
   --primary-hover: #047857;
   --primary-foreground: #FFFFFF;
-  --primary-glow: rgba(5, 150, 105, 0.35);
+  --primary-glow: rgba(5, 150, 105, 0.3);
   --accent: #059669;
   --success: #059669;
-  --secondary: #F3F4F6;
-  --secondary-foreground: #374151;
+  --secondary: #F4F4F5;
+  --secondary-foreground: #3F3F46;
   --muted: #F4F4F5;
   --muted-foreground: #71717A;
   --border: #E4E4E7;
   --ring: #059669;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
-  --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.07);
+  --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.08);
   --nav-bg: rgba(250, 250, 250, 0.95);
-}
-
-/* Dark Mode - Deep charcoal, emerald accent, subtle glow */
-.dark {
-  --background: #0F1419;
-  --foreground: #E7E9EA;
-  --heading: #FFFFFF;
-  --card: #1A1F26;
-  --card-foreground: #E7E9EA;
-  --primary: #10B981;
-  --primary-hover: #34D399;
-  --primary-foreground: #FFFFFF;
-  --primary-glow: rgba(16, 185, 129, 0.4);
-  --accent: #10B981;
-  --success: #10B981;
-  --secondary: #1A1F26;
-  --secondary-foreground: #E7E9EA;
-  --muted: #161B22;
-  --muted-foreground: #8B949E;
-  --border: #30363D;
-  --ring: #10B981;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.35);
-  --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.4);
-  --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.45);
-  --nav-bg: rgba(15, 20, 25, 0.95);
 }
 
 @theme inline {
@@ -102,7 +102,7 @@
   border-bottom: 1px solid var(--border);
 }
 
-/* Buttons - emerald, subtle glow on active */
+/* Buttons - emerald, subtle glow on hover */
 .btn-primary {
   border-radius: 0.75rem;
   font-weight: 600;
@@ -126,16 +126,16 @@
   background: var(--muted);
 }
 
-/* Cards */
+/* Cards - marketplace style */
 .card-elevated {
   border-radius: 1rem;
   border: 1px solid var(--border);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow);
 }
 .card-elevated:hover {
   box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
 /* Input focus */
@@ -148,7 +148,7 @@ select:focus {
 
 /* Page transition */
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -158,6 +158,15 @@ select:focus {
 .animate-fade-in-delay-1 { animation: fadeSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.05s forwards; opacity: 0; }
 .animate-fade-in-delay-2 { animation: fadeSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards; opacity: 0; }
 .animate-fade-in-delay-3 { animation: fadeSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards; opacity: 0; }
+
+/* Dropdown slide */
+@keyframes dropdownSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-dropdown {
+  animation: dropdownSlide 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
 
 /* Skeleton loader */
 @keyframes shimmer {
@@ -171,7 +180,28 @@ select:focus {
   border-radius: 0.5rem;
 }
 
-/* Professional loading spinner */
+/* Logo spinner for loading */
+.spinner-logo {
+  width: 2rem;
+  height: 2rem;
+}
+.spinner-logo svg {
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Standard spinner */
 .spinner {
   width: 1.5rem;
   height: 1.5rem;
@@ -179,7 +209,4 @@ select:focus {
   border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
 }
