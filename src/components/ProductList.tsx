@@ -72,11 +72,11 @@ export default function ProductList() {
       ) : (
         products.map((product) => (
           <Link key={product.id} href={`/product/${product.id}`} className="group block">
-            <div className="card-feature rounded-2xl border border-border bg-card p-6 glass shadow-sm hover:shadow-lg hover:border-primary/20">
+            <div className="card-feature rounded-xl border border-border bg-card p-6 shadow-sm hover:shadow-lg">
               {product.image_url ? (
-                <img src={product.image_url} alt={product.name} className="w-full h-40 object-cover rounded-xl mb-4" />
+                <img src={product.image_url} alt={product.name} className="w-full h-40 object-cover rounded-lg mb-4" />
               ) : (
-                <div className="w-full h-40 bg-muted rounded-xl mb-4 flex items-center justify-center text-4xl text-muted-foreground">📦</div>
+                <div className="w-full h-40 bg-muted/80 rounded-lg mb-4 flex items-center justify-center text-4xl text-muted-foreground">📦</div>
               )}
               <div className="flex items-center gap-2 mb-2">
                 <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{product.name}</h3>

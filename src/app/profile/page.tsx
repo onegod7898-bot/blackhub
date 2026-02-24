@@ -114,10 +114,14 @@ function ProfileContent() {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <nav className="border-b border-border px-4 py-3 flex justify-between items-center">
-        <Logo />
-        <ThemeToggle />
-      </nav>
+      <header className="nav-premium">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-14 lg:h-16 items-center justify-between">
+            <Logo />
+            <ThemeToggle />
+          </div>
+        </div>
+      </header>
       <div className="p-6 max-w-lg mx-auto">
         <h1 className="text-2xl font-bold text-foreground mb-6">Business Profile</h1>
         <form onSubmit={handleSubmit} className="space-y-4">

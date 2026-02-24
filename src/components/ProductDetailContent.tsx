@@ -98,12 +98,14 @@ export default function ProductDetailContent() {
 
   return (
     <main className="min-h-screen bg-background pb-24">
-      <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
-          <Logo />
-          <ThemeToggle />
+      <header className="sticky top-0 z-50 nav-premium">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-14 lg:h-16 items-center justify-between">
+            <Logo />
+            <ThemeToggle />
+          </div>
         </div>
-      </nav>
+      </header>
       <div className="max-w-2xl mx-auto p-4 sm:p-6">
         <div className="bg-card rounded-2xl border border-border overflow-hidden mb-6">
           <div className="aspect-square bg-muted flex items-center justify-center">

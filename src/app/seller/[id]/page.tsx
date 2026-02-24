@@ -49,10 +49,14 @@ export default function SellerProfilePage() {
 
   return (
     <main className="min-h-screen bg-background pb-24">
-      <nav className="border-b border-border px-4 py-3 flex justify-between items-center">
-        <Logo />
-        <ThemeToggle />
-      </nav>
+      <header className="nav-premium">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-14 lg:h-16 items-center justify-between">
+            <Logo />
+            <ThemeToggle />
+          </div>
+        </div>
+      </header>
       <div className="max-w-2xl mx-auto p-4">
         <div className="card-feature rounded-2xl border border-border bg-card p-6 text-center mb-6 glass">
           {profile?.avatar_url ? (

@@ -59,15 +59,17 @@ export default function PricingPage() {
 
   return (
     <main className="min-h-screen bg-background py-12 px-4 pb-24 animate-fade-in">
-      <nav className="sticky top-0 z-50 glass border-b border-border/50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
-          <Logo />
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            {!session && <Link href="/login" className="text-sm text-muted-foreground hover:text-foreground">Log in</Link>}
+      <header className="sticky top-0 z-50 nav-premium">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-14 lg:h-16 items-center justify-between">
+            <Logo />
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              {!session && <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground">Log in</Link>}
+            </div>
           </div>
         </div>
-      </nav>
+      </header>
       <div className="max-w-5xl mx-auto mt-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-foreground tracking-tight">Pricing</h1>

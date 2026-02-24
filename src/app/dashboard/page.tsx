@@ -169,8 +169,9 @@ export default function DashboardPage() {
   return (
     <SubscribedRoute>
       <div className="min-h-screen bg-background pb-24 animate-fade-in">
-        <nav className="sticky top-0 z-50 glass border-b border-border/50">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+        <header className="sticky top-0 z-50 nav-premium">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-14 lg:h-16 items-center justify-between">
             <div className="flex items-center gap-3">
               <Logo />
               <span className="text-sm text-muted-foreground hidden sm:inline">Dashboard</span>
@@ -184,7 +185,8 @@ export default function DashboardPage() {
               </button>
             </div>
           </div>
-        </nav>
+          </div>
+        </header>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
           {/* Analytics cards */}
           {analyticsData && (

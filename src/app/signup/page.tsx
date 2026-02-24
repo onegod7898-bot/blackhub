@@ -82,12 +82,14 @@ function SignupForm() {
   if (success) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24">
-        <nav className="absolute top-0 left-0 right-0 border-b border-border bg-background/95 backdrop-blur">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
-            <Logo />
-            <ThemeToggle />
+        <header className="absolute top-0 left-0 right-0 nav-premium">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex h-14 lg:h-16 items-center justify-between">
+              <Logo />
+              <ThemeToggle />
+            </div>
           </div>
-        </nav>
+        </header>
         <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 text-center shadow-lg">
           <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6">
             <svg className="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,14 +106,16 @@ function SignupForm() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-background px-4 pb-24 animate-fade-in">
-      <nav className="absolute top-0 left-0 right-0 border-b border-border bg-background/95 backdrop-blur">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
-          <Logo />
-          <ThemeToggle />
+      <header className="absolute top-0 left-0 right-0 nav-premium">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-14 lg:h-16 items-center justify-between">
+            <Logo />
+            <ThemeToggle />
+          </div>
         </div>
-      </nav>
+      </header>
       <div className="w-full max-w-md mt-8">
-        <div className="rounded-2xl border border-border bg-card p-8 shadow-lg">
+        <div className="rounded-xl border border-border bg-card p-8 shadow-lg">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-foreground tracking-tight">Create an account</h1>
             <p className="text-muted-foreground mt-1">Choose your role and country</p>

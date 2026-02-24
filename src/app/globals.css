@@ -1,48 +1,54 @@
 @import "tailwindcss";
 
-/* ========== DESIGN SYSTEM: Premium Global SaaS ========== */
+/* ========== PREMIUM DESIGN SYSTEM (Shopify / Fiverr / Kuda inspired) ========== */
 
-/* Light Mode */
+/* Light Mode - Clean, professional */
 :root,
 .light {
-  --background: #F8FAFC;
+  --background: #FFFFFF;
   --foreground: #0F172A;
   --card: #FFFFFF;
   --card-foreground: #0F172A;
-  --primary: #2563EB;
+  --primary: #059669;
+  --primary-hover: #047857;
   --primary-foreground: #FFFFFF;
-  --secondary: #7C3AED;
+  --secondary: #0F172A;
   --secondary-foreground: #FFFFFF;
-  --muted: #F1F5F9;
+  --muted: #F8FAFC;
   --muted-foreground: #64748B;
   --border: #E2E8F0;
-  --ring: #2563EB;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-  --glass: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.5);
+  --ring: #059669;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.06);
+  --glass: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --nav-bg: rgba(255, 255, 255, 0.95);
 }
 
-/* Dark Mode */
+/* Dark Mode - Premium dark */
 .dark {
   --background: #0F172A;
-  --foreground: #E2E8F0;
+  --foreground: #F8FAFC;
   --card: #1E293B;
-  --card-foreground: #E2E8F0;
-  --primary: #3B82F6;
+  --card-foreground: #F8FAFC;
+  --primary: #10B981;
+  --primary-hover: #059669;
   --primary-foreground: #FFFFFF;
-  --secondary: #8B5CF6;
-  --secondary-foreground: #FFFFFF;
+  --secondary: #1E293B;
+  --secondary-foreground: #F8FAFC;
   --muted: #1E293B;
   --muted-foreground: #94A3B8;
   --border: #334155;
-  --ring: #3B82F6;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.25);
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.35), 0 4px 6px -4px rgb(0 0 0 / 0.25);
-  --glass: rgba(30, 41, 59, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --ring: #10B981;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+  --glass: rgba(30, 41, 59, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --nav-bg: rgba(15, 23, 42, 0.95);
 }
 
 @theme inline {
@@ -58,9 +64,10 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-ring: var(--ring);
-  --font-sans: var(--font-inter), 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: var(--font-inter), 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, monospace;
-  --radius-xl: 1rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
 }
 
 @layer base {
@@ -71,10 +78,20 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
   }
 }
 
-/* Glassmorphism */
+/* Premium navbar */
+.nav-premium {
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.03);
+}
+
+/* Glass card */
 .glass {
   background: var(--glass);
   backdrop-filter: blur(12px);
@@ -84,28 +101,31 @@
 
 /* Premium buttons */
 .btn-saas {
-  border-radius: 0.75rem;
+  border-radius: var(--radius-xl);
   font-weight: 600;
-  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .btn-saas:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 20px -2px rgb(37 99 235 / 0.4);
-}
-.btn-saas:active {
-  transform: scale(0.98);
-}
-
-/* Feature card hover lift */
-.card-feature {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.card-feature:hover {
-  transform: translateY(-4px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-lg);
 }
+.btn-saas:active {
+  transform: translateY(0);
+}
 
-/* Input focus ring */
+/* Feature card */
+.card-feature {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--border);
+}
+.card-feature:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border);
+}
+
+/* Input focus */
 input:focus,
 textarea:focus,
 select:focus {
@@ -113,9 +133,9 @@ select:focus {
   box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
 }
 
-/* Page transitions */
+/* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes gradientShift {
@@ -124,14 +144,14 @@ select:focus {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
-.animate-fade-in-delay-1 { animation: fadeIn 0.5s ease-out 0.1s forwards; opacity: 0; }
-.animate-fade-in-delay-2 { animation: fadeIn 0.5s ease-out 0.2s forwards; opacity: 0; }
-.animate-fade-in-delay-3 { animation: fadeIn 0.5s ease-out 0.3s forwards; opacity: 0; }
+.animate-fade-in-delay-1 { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.05s forwards; opacity: 0; }
+.animate-fade-in-delay-2 { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards; opacity: 0; }
+.animate-fade-in-delay-3 { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards; opacity: 0; }
 
-.bg-gradient-animated {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #2563eb 50%, #7c3aed 75%, #667eea 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+.bg-gradient-premium {
+  background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease infinite;
 }
