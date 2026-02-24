@@ -8,6 +8,7 @@ import SubscribedRoute from '@/components/SubscribedRoute'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
 import DashboardSidebar from '@/components/DashboardSidebar'
+import { useToast } from '@/contexts/ToastContext'
 
 const CATEGORIES = ['general', 'electronics', 'fashion', 'home', 'sports']
 
@@ -51,6 +52,7 @@ export default function DashboardPage() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
   const [copied, setCopied] = useState(false)
+  const toast = useToast()
 
   useEffect(() => {
     fetchAll()
@@ -127,8 +129,9 @@ export default function DashboardPage() {
       setEditingId(null)
       setShowForm(false)
       fetchAll()
+      toast.success(editingId ? 'Listing updated' : 'Listing created')
     } catch (err: any) {
-      alert(err.message)
+      toast.error(err.message)
     } finally {
       setSaving(false)
     }
@@ -142,8 +145,12 @@ export default function DashboardPage() {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${session.access_token}` },
     })
-    if (res.ok) fetchAll()
-    else alert((await res.json()).error)
+    if (res.ok) {
+      fetchAll()
+      toast.success('Listing deleted')
+    } else {
+      toast.error((await res.json()).error)
+    }
   }
 
   function startEdit(l: Listing) {
@@ -160,6 +167,7 @@ export default function DashboardPage() {
     if (referralData?.referralLink) {
       navigator.clipboard.writeText(referralData.referralLink)
       setCopied(true)
+      toast.success('Link copied to clipboard')
       setTimeout(() => setCopied(false), 2000)
     }
   }
@@ -256,7 +264,7 @@ export default function DashboardPage() {
                         {analyticsData.transactions.slice(0, 5).map((t) => (
                           <tr key={t.id} className="border-b border-border/50">
                             <td className="py-3 text-foreground font-mono text-xs">{t.id.slice(0, 12)}...</td>
-                            <td className="py-3"><span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${t.status === 'pending' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'}`}>{t.status}</span></td>
+                            <td className="py-3"><span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${t.status === 'pending' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400' : 'bg-[var(--success)]/15 text-[var(--success)]'}`}>{t.status}</span></td>
                             <td className="py-3 text-muted-foreground">{new Date(t.date).toLocaleDateString()}</td>
                           </tr>
                         ))}
@@ -334,7 +342,7 @@ export default function DashboardPage() {
                   <button type="submit" disabled={saving} className="btn-primary rounded-xl px-5 py-2.5 bg-primary text-primary-foreground font-semibold disabled:opacity-50">
                     {saving ? (
                       <span className="inline-flex items-center gap-2">
-                        <span className="animate-spin rounded-full h-4 w-4 border-2 border-primary-foreground border-t-transparent" />
+                        <span className="spinner" />
                         Saving...
                       </span>
                     ) : editingId ? 'Update listing' : 'Create listing'}

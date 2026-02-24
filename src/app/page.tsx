@@ -41,12 +41,12 @@ export default function Home() {
     <main className="min-h-screen bg-background pb-24">
       {/* Hero - Bold, clean, two CTAs, right mockup */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--muted)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-muted/30" />
         <Navbar transparent />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 lg:pt-28 lg:pb-32">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold text-foreground tracking-tight leading-[1.1] animate-fade-in">
+              <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-bold tracking-tight leading-[1.08] animate-fade-in" style={{ color: 'var(--heading)' }}>
                 The marketplace for{' '}
                 <span className="text-primary">global sellers</span>
               </h1>

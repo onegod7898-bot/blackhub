@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ToastProvider } from "@/contexts/ToastContext";
 import FirebaseProvider from "@/components/FirebaseProvider";
 import NotificationPrompt from "@/components/NotificationPrompt";
 import Footer from "@/components/Footer";
@@ -81,13 +82,15 @@ export default function RootLayout({
       </head>
       <body className="antialiased min-h-screen bg-background text-foreground font-sans">
         <ThemeProvider>
-          <FirebaseProvider>
+          <ToastProvider>
+            <FirebaseProvider>
             <div className="flex flex-col min-h-screen">
               <div className="flex-1">{children}</div>
               <Footer />
             </div>
             <NotificationPrompt />
-          </FirebaseProvider>
+            </FirebaseProvider>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>
