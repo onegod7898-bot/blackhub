@@ -67,7 +67,11 @@ export default function ProductList() {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.length === 0 ? (
         <div className="col-span-full rounded-xl border border-border bg-card p-12 text-center">
-          <p className="text-muted-foreground">No products yet. Add products in your Supabase database.</p>
+          <p className="text-muted-foreground mb-4">No products listed yet.</p>
+          <p className="text-sm text-muted-foreground mb-6">Sellers can list products from their dashboard. Sign up as a seller to get started with a 7-day free trial.</p>
+          <Link href="/signup" className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-95">
+            Sign up to list products
+          </Link>
         </div>
       ) : (
         products.map((product) => (
