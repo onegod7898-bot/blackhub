@@ -24,10 +24,12 @@ export async function paystackRequest(endpoint: string, options: RequestInit = {
     },
   })
 
+  const data = await response.json()
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.message || 'Paystack API error')
+    throw new Error(data.message || 'Paystack API error')
   }
-
-  return response.json()
+  if (data.status === false && data.message) {
+    throw new Error(data.message)
+  }
+  return data
 }

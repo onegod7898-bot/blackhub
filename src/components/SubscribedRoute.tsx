@@ -5,7 +5,6 @@ import { supabase } from '@/lib/supabase'
 import { analytics } from '@/lib/analytics'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { isActiveAccess } from '@/lib/subscription'
 import ThemeToggle from '@/components/ThemeToggle'
 import Logo from '@/components/Logo'
 
@@ -42,13 +41,38 @@ export default function SubscribedRoute({ children }: { children: React.ReactNod
           return
         }
 
-        const { data: sub } = await supabase
+        let profileData = profile
+        let { data: sub } = await supabase
           .from('subscriptions')
           .select('status, trial_ends_at, current_period_ends_at')
           .eq('user_id', data.session.user.id)
           .single()
 
         if (!mounted) return
+        const needsOnboarding = !profileData || (profileData.role === 'seller' && !sub)
+        if (needsOnboarding) {
+          try {
+            await fetch('/api/auth/onboarding', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${data.session.access_token}` },
+              body: JSON.stringify({}),
+            })
+            if (!mounted) return
+            const { data: profData } = await supabase.from('profiles').select('role, suspended').eq('id', data.session.user.id).single()
+            const { data: subData } = await supabase.from('subscriptions').select('status, trial_ends_at, current_period_ends_at').eq('user_id', data.session.user.id).single()
+            if (mounted) {
+              profileData = profData
+              sub = subData
+            }
+          } catch {
+            // ignore
+          }
+        }
+        if (!mounted) return
+        if (profileData?.role === 'buyer') {
+          router.push('/explore')
+          return
+        }
         const status = sub?.status ?? null
         const trialEndsAt = sub?.trial_ends_at ?? null
         const currentPeriodEndsAt = sub?.current_period_ends_at ?? null
@@ -114,21 +138,24 @@ export default function SubscribedRoute({ children }: { children: React.ReactNod
           <Logo />
           <ThemeToggle />
         </nav>
-        <div className="w-full max-w-md bg-card rounded-2xl shadow-xl p-8 text-center border border-border">
-          <div className="mb-6 mx-auto w-20 h-20 bg-amber-500/20 rounded-full flex items-center justify-center">
-            <svg className="w-10 h-10 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        <div className="w-full max-w-md bg-card/50 backdrop-blur-xl rounded-3xl p-10 text-center border border-border/50 shadow-2xl shadow-primary/5">
+          <div className="mb-6 mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/10 flex items-center justify-center">
+            <svg className="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-foreground mb-2">Subscription Required</h1>
-          <p className="text-muted-foreground mb-6">
-            Your 7-day free trial has ended. Subscribe to continue listing products.
+          <h1 className="text-2xl font-bold text-foreground mb-2 tracking-tight">Trial ended</h1>
+          <p className="text-muted-foreground mb-8 text-[15px] leading-relaxed">
+            Your 7-day free trial is over. Upgrade to keep listing products and growing your store.
           </p>
           <Link
             href="/pricing"
-            className="inline-block w-full py-3 bg-primary text-primary-foreground font-medium rounded-lg hover:opacity-90 transition-opacity"
+            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-primary text-primary-foreground font-semibold text-[15px] hover:opacity-95 active:scale-[0.98] transition-all shadow-lg shadow-primary/25"
           >
-            Upgrade Now
+            View plans
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </Link>
         </div>
       </div>

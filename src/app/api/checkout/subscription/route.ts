@@ -29,27 +29,27 @@ export async function POST(request: NextRequest) {
     const isYearly = billing === 'yearly'
     const yearlyDiscount = 0.2
     const monthlyAmount = isNgn ? planConfig.ngn : planConfig.usd
-    const amountSmallest = isYearly ? Math.round(monthlyAmount * 12 * (1 - yearlyDiscount)) : monthlyAmount
+    let amountSmallest = isYearly ? Math.round(monthlyAmount * 12 * (1 - yearlyDiscount)) : monthlyAmount
+    amountSmallest = Math.max(amountSmallest, isNgn ? 5000 : 200)
 
     const planKey = isYearly ? `PAYSTACK_PLAN_${plan.toUpperCase()}_${currencyCode}_YEARLY` : `PAYSTACK_PLAN_${plan.toUpperCase()}_${currencyCode}`
     const planCode = process.env[planKey]
 
     const body: Record<string, unknown> = {
       email: user.email!,
+      amount: String(Math.round(amountSmallest)),
       currency: currencyCode,
       callback_url: `${request.nextUrl.origin}/success?subscription=1`,
-      metadata: {
+      metadata: JSON.stringify({
         userId: user.id,
         type: 'subscription',
         plan,
         currency: currencyCode,
-      },
+        ...(isYearly && { billing: 'yearly' }),
+      }),
     }
     if (planCode) {
       body.plan = planCode
-    } else {
-      body.amount = amountSmallest
-      if (isYearly) (body.metadata as Record<string, string>).billing = 'yearly'
     }
 
     const response = await paystackRequest('/transaction/initialize', {

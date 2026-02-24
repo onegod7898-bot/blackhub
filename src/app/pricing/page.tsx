@@ -6,7 +6,6 @@ import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
 import Logo from '@/components/Logo'
-import Navbar from '@/components/Navbar'
 
 export default function PricingPage() {
   const [session, setSession] = useState<any>(null)
@@ -71,101 +70,146 @@ export default function PricingPage() {
         </div>
       </header>
       <div className="max-w-5xl mx-auto mt-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground tracking-tight">Pricing</h1>
-          <p className="text-muted-foreground mt-2">7-day free trial. No card required to start.</p>
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <div className="flex rounded-xl border border-border bg-card p-1">
+        <div className="text-center mb-14">
+          <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight">Simple pricing</h1>
+          <p className="text-muted-foreground mt-3 text-lg">Start selling free for 7 days. No card needed.</p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <div className="inline-flex rounded-2xl border border-border bg-card/50 p-1.5">
               <button
                 onClick={() => setCurrency('NGN')}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${currency === 'NGN' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${currency === 'NGN' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
               >
                 NGN
               </button>
               <button
                 onClick={() => setCurrency('USD')}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${currency === 'USD' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${currency === 'USD' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
               >
                 USD
               </button>
             </div>
-            <div className="flex rounded-xl border border-border bg-card p-1">
+            <div className="inline-flex rounded-2xl border border-border bg-card/50 p-1.5">
               <button
                 onClick={() => setBilling('monthly')}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${billing === 'monthly' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${billing === 'monthly' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
               >
                 Monthly
               </button>
               <button
                 onClick={() => setBilling('yearly')}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${billing === 'yearly' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${billing === 'yearly' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
               >
                 Yearly <span className="text-xs ml-1 opacity-90">Save 20%</span>
               </button>
             </div>
           </div>
         </div>
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="card-feature rounded-2xl border border-border bg-card p-8 shadow-lg">
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+          <div className="group rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-8 lg:p-10 transition-all hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5">
             <h2 className="text-xl font-bold text-foreground mb-1">Starter</h2>
             <p className="text-muted-foreground text-sm mb-6">For individuals</p>
-            <div className="mb-6">
-              <span className="text-3xl font-bold text-foreground">{starterDisplay}</span>
-              <span className="text-muted-foreground text-sm">/{billing === 'yearly' ? 'month' : 'month'}</span>
+            <div className="mb-8">
+              <span className="text-4xl font-bold text-foreground tracking-tight">{starterDisplay}</span>
+              <span className="text-muted-foreground text-sm">/month</span>
             </div>
-            <ul className="space-y-3 mb-8 text-sm text-muted-foreground">
-              <li>7-day free trial</li>
-              <li>Max 5 listings</li>
-              <li>Basic analytics</li>
-              <li>Standard support</li>
+            <ul className="space-y-4 mb-10 text-sm text-muted-foreground">
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </span>
+                7-day free trial
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </span>
+                Max 5 listings
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </span>
+                Basic analytics
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </span>
+                Standard support
+              </li>
             </ul>
             {session ? (
               <button
                 onClick={() => handleSubscribe('starter')}
                 disabled={!!loading}
-                className="btn-saas w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold shadow-sm hover:shadow-primary/25 disabled:opacity-50"
+                className="w-full rounded-xl bg-primary py-3.5 text-primary-foreground font-semibold text-[15px] hover:opacity-95 active:scale-[0.98] transition-all disabled:opacity-50 shadow-lg shadow-primary/20"
               >
                 {loading === 'starter' ? 'Redirecting...' : 'Subscribe with Paystack'}
               </button>
             ) : (
-              <Link href="/signup" className="btn-saas block w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold text-center shadow-sm hover:shadow-primary/25">
+              <Link href="/signup" className="block w-full rounded-xl bg-primary py-3.5 text-primary-foreground font-semibold text-[15px] text-center hover:opacity-95 active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
                 Start free trial
               </Link>
             )}
           </div>
-          <div className="card-feature rounded-2xl border-2 border-primary bg-card p-8 shadow-lg relative ring-2 ring-primary/20 ring-offset-2 ring-offset-background">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold text-primary-foreground">
-              Most Popular
+          <div className="relative rounded-3xl border-2 border-primary bg-card/80 backdrop-blur-sm p-8 lg:p-10 shadow-xl shadow-primary/10">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground">
+              Most popular
             </div>
             <h2 className="text-xl font-bold text-foreground mb-1">Pro</h2>
             <p className="text-muted-foreground text-sm mb-6">For growing businesses</p>
-            <div className="mb-6">
-              <span className="text-3xl font-bold text-foreground">{proDisplay}</span>
-              <span className="text-muted-foreground text-sm">/{billing === 'yearly' ? 'month' : 'month'}</span>
+            <div className="mb-8">
+              <span className="text-4xl font-bold text-foreground tracking-tight">{proDisplay}</span>
+              <span className="text-muted-foreground text-sm">/month</span>
             </div>
-            <ul className="space-y-3 mb-8 text-sm text-muted-foreground">
-              <li>7-day free trial</li>
-              <li>Unlimited listings</li>
-              <li>Advanced analytics</li>
-              <li>Priority badge</li>
-              <li>Featured placement</li>
+            <ul className="space-y-4 mb-10 text-sm text-muted-foreground">
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </span>
+                7-day free trial
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </span>
+                Unlimited listings
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </span>
+                Advanced analytics
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </span>
+                Priority badge
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </span>
+                Featured placement
+              </li>
             </ul>
             {session ? (
               <button
                 onClick={() => handleSubscribe('pro')}
                 disabled={!!loading}
-                className="btn-saas w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold shadow-sm hover:shadow-primary/30 disabled:opacity-50"
+                className="w-full rounded-xl bg-primary py-3.5 text-primary-foreground font-semibold text-[15px] hover:opacity-95 active:scale-[0.98] transition-all disabled:opacity-50 shadow-lg shadow-primary/20"
               >
                 {loading === 'pro' ? 'Redirecting...' : 'Subscribe with Paystack'}
               </button>
             ) : (
-              <Link href="/signup" className="btn-saas block w-full rounded-xl bg-primary py-3 text-primary-foreground font-semibold text-center shadow-sm hover:shadow-primary/30">
+              <Link href="/signup" className="block w-full rounded-xl bg-primary py-3.5 text-primary-foreground font-semibold text-[15px] text-center hover:opacity-95 active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
                 Start free trial
               </Link>
             )}
           </div>
         </div>
-        <p className="text-center text-sm text-muted-foreground mt-10">Nigeria: NGN. International: USD.</p>
+        <p className="text-center text-sm text-muted-foreground mt-12">Nigeria: NGN. International: USD.</p>
       </div>
       <BottomNav />
     </main>
