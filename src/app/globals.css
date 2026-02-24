@@ -27,18 +27,18 @@
   --nav-bg: rgba(255, 255, 255, 0.95);
 }
 
-/* Dark Mode - Premium dark */
+/* Dark Mode - Premium dark black */
 .dark {
-  --background: #0F172A;
+  --background: #000000;
   --foreground: #F8FAFC;
-  --card: #1E293B;
+  --card: #141414;
   --card-foreground: #F8FAFC;
   --primary: #10B981;
   --primary-hover: #059669;
   --primary-foreground: #FFFFFF;
   --secondary: #1E293B;
   --secondary-foreground: #F8FAFC;
-  --muted: #1E293B;
+  --muted: #0f0f0f;
   --muted-foreground: #94A3B8;
   --border: #334155;
   --ring: #10B981;
@@ -48,7 +48,7 @@
   --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.5);
   --glass: rgba(30, 41, 59, 0.85);
   --glass-border: rgba(255, 255, 255, 0.06);
-  --nav-bg: rgba(15, 23, 42, 0.95);
+  --nav-bg: rgba(0, 0, 0, 0.95);
 }
 
 @theme inline {
