@@ -264,7 +264,7 @@ export default function DashboardPage() {
                         {analyticsData.transactions.slice(0, 5).map((t) => (
                           <tr key={t.id} className="border-b border-border/50">
                             <td className="py-3 text-foreground font-mono text-xs">{t.id.slice(0, 12)}...</td>
-                            <td className="py-3"><span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${t.status === 'pending' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400' : 'bg-[var(--success)]/15 text-[var(--success)]'}`}>{t.status}</span></td>
+                            <td className="py-3"><span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${t.status === 'pending' ? 'bg-muted text-muted-foreground' : 'bg-[var(--success)]/15 text-[var(--success)]'}`}>{t.status}</span></td>
                             <td className="py-3 text-muted-foreground">{new Date(t.date).toLocaleDateString()}</td>
                           </tr>
                         ))}

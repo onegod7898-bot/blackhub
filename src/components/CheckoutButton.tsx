@@ -61,7 +61,7 @@ export default function CheckoutButton({
     <button
       onClick={handleCheckout}
       disabled={loading || !email}
-      className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      className="btn-primary px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
     >
       {loading ? 'Processing...' : 'Pay with Paystack'}
     </button>

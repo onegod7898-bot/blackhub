@@ -17,7 +17,7 @@ export default function CancelPage() {
         </p>
         <a
           href="/"
-          className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="btn-primary inline-block px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold"
         >
           Return Home
         </a>

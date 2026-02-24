@@ -178,7 +178,7 @@ export default function AdminPage() {
                         <td className="p-4 flex flex-wrap gap-2">
                           <button
                             onClick={() => toggleVerify(u.id, u.verified_seller)}
-                            className={`px-3 py-1 text-sm rounded ${u.verified_seller ? 'bg-amber-500/20 text-amber-600' : 'bg-primary/20 text-primary'}`}
+                            className={`px-3 py-1 text-sm rounded ${u.verified_seller ? 'bg-[var(--success)]/20 text-[var(--success)]' : 'bg-primary/20 text-primary'}`}
                           >
                             {u.verified_seller ? 'Unverify' : 'Verify'}
                           </button>

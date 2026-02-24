@@ -173,7 +173,7 @@ function ProfileContent() {
               Back to dashboard
             </Link>
             {isCEO && (
-              <Link href="/bh-portal" className="px-4 py-2 border border-amber-500/50 text-amber-600 dark:text-amber-400 rounded-lg hover:bg-amber-500/10">
+              <Link href="/bh-portal" className="px-4 py-2 border border-primary/50 text-primary rounded-xl hover:bg-primary/10 transition-colors">
                 Admin Portal
               </Link>
             )}

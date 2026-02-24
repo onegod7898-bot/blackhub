@@ -1,28 +1,51 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 
 interface LogoProps {
   className?: string
   variant?: 'default' | 'compact' | 'full'
 }
 
+/* Symbol: Growth + hub. Upward motion, connected nodes, rounded square. Fintech minimal. */
+function LogoIcon({ className = 'w-9 h-9' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <rect width="40" height="40" rx="10" fill="currentColor" className="text-primary" />
+      {/* Upward arrow + hub node */}
+      <path
+        d="M20 12v16M14 18l6-6 6 6"
+        stroke="white"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="20" cy="12" r="2.5" fill="white" />
+    </svg>
+  )
+}
+
 export default function Logo({ className = '', variant = 'default' }: LogoProps) {
   if (variant === 'full') {
     return (
-      <Link href="/" className={`inline-flex items-center group ${className}`}>
-        <Image src="/logo.png" alt="BlackHub" width={120} height={36} priority className="h-8 w-auto object-contain" />
+      <Link href="/" className={`inline-flex items-center gap-3 group ${className}`}>
+        <LogoIcon className="w-10 h-10 shrink-0" />
+        <span className="font-bold text-foreground text-xl tracking-tight uppercase group-hover:opacity-90 transition-opacity duration-200">
+          BlackHub
+        </span>
       </Link>
     )
   }
   return (
     <Link href="/" className={`inline-flex items-center gap-2.5 group ${className}`}>
-      <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary shrink-0 overflow-hidden ring-1 ring-primary/20">
-        <Image src="/logo.png" alt="" width={36} height={36} priority className="w-full h-full object-contain p-1.5" />
-      </span>
+      <LogoIcon className="shrink-0" />
       {variant !== 'compact' && (
-        <span className="font-semibold text-foreground text-lg tracking-tight group-hover:opacity-90 transition-opacity">
+        <span className="font-bold text-foreground text-lg tracking-tight uppercase group-hover:opacity-90 transition-opacity duration-200">
           BlackHub
         </span>
       )}
