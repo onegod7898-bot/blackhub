@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ========== DESIGN SYSTEM: Premium SaaS ========== */
+/* ========== DESIGN SYSTEM: Premium Global SaaS ========== */
 
 /* Light Mode */
 :root,
@@ -20,6 +20,8 @@
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
 }
 
 /* Dark Mode */
@@ -39,6 +41,8 @@
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.25);
   --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.35), 0 4px 6px -4px rgb(0 0 0 / 0.25);
+  --glass: rgba(30, 41, 59, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
@@ -70,34 +74,35 @@
   }
 }
 
-/* Premium card style */
-.card-premium {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  box-shadow: var(--shadow);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+/* Glassmorphism */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
 }
 
-.card-premium:hover {
-  box-shadow: var(--shadow-lg);
-}
-
-/* Button base */
-.btn-primary {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  font-weight: 500;
+/* Premium buttons */
+.btn-saas {
   border-radius: 0.75rem;
-  transition: opacity 0.2s ease, transform 0.05s ease;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
-
-.btn-primary:hover {
-  opacity: 0.93;
+.btn-saas:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px -2px rgb(37 99 235 / 0.4);
 }
-
-.btn-primary:active {
+.btn-saas:active {
   transform: scale(0.98);
+}
+
+/* Feature card hover lift */
+.card-feature {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-feature:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Input focus ring */
@@ -108,12 +113,25 @@ select:focus {
   box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
 }
 
-/* Subtle page transition */
+/* Page transitions */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.25s ease-out;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+.animate-fade-in-delay-1 { animation: fadeIn 0.5s ease-out 0.1s forwards; opacity: 0; }
+.animate-fade-in-delay-2 { animation: fadeIn 0.5s ease-out 0.2s forwards; opacity: 0; }
+.animate-fade-in-delay-3 { animation: fadeIn 0.5s ease-out 0.3s forwards; opacity: 0; }
+
+.bg-gradient-animated {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #2563eb 50%, #7c3aed 75%, #667eea 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
 }

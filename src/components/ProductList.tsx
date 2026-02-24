@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import VerifiedBadge from '@/components/VerifiedBadge'
 
 interface Product {
   id: string
@@ -11,10 +12,12 @@ interface Product {
   price: number
   image_url?: string | null
   created_at: string
+  seller_id: string
 }
 
 export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([])
+  const [verifiedSellers, setVerifiedSellers] = useState<Record<string, boolean>>({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -29,7 +32,15 @@ export default function ProductList() {
         .order('created_at', { ascending: false })
 
       if (error) throw error
-      setProducts(data || [])
+      const list = data || []
+      setProducts(list)
+      const sellerIds = [...new Set(list.map((p) => p.seller_id))]
+      if (sellerIds.length > 0) {
+        const { data: profiles } = await supabase.from('profiles').select('id, verified_seller').in('id', sellerIds)
+        const map: Record<string, boolean> = {}
+        ;(profiles || []).forEach((p) => { map[p.id] = !!p.verified_seller })
+        setVerifiedSellers(map)
+      }
     } catch (error) {
       console.error('Error fetching products:', error)
     } finally {
@@ -61,13 +72,16 @@ export default function ProductList() {
       ) : (
         products.map((product) => (
           <Link key={product.id} href={`/product/${product.id}`} className="group block">
-            <div className="rounded-xl border border-border bg-card p-6 shadow-sm transition-all duration-200 hover:shadow-md hover:border-primary/20">
+            <div className="card-feature rounded-2xl border border-border bg-card p-6 glass shadow-sm hover:shadow-lg hover:border-primary/20">
               {product.image_url ? (
-                <img src={product.image_url} alt={product.name} className="w-full h-40 object-cover rounded-lg mb-4" />
+                <img src={product.image_url} alt={product.name} className="w-full h-40 object-cover rounded-xl mb-4" />
               ) : (
-                <div className="w-full h-40 bg-muted rounded-lg mb-4 flex items-center justify-center text-4xl text-muted-foreground">📦</div>
+                <div className="w-full h-40 bg-muted rounded-xl mb-4 flex items-center justify-center text-4xl text-muted-foreground">📦</div>
               )}
-              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{product.name}</h3>
+              <div className="flex items-center gap-2 mb-2">
+                <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{product.name}</h3>
+                {verifiedSellers[product.seller_id] && <VerifiedBadge size="sm" />}
+              </div>
               <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{product.description || ''}</p>
               <p className="text-xl font-bold text-primary">${product.price}</p>
             </div>

@@ -15,6 +15,7 @@
    - Go to [vercel.com](https://vercel.com) → New Project
    - Import your GitHub repo
    - Framework: Next.js (auto-detected)
+   - **Root Directory**: If the Next.js app is in a `blackhub` subfolder, set Root Directory to `blackhub` in project settings
 
 3. **Add Environment Variables** in Vercel Project Settings → Environment Variables:
    - `NEXT_PUBLIC_SUPABASE_URL`

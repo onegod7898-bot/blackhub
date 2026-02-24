@@ -17,9 +17,21 @@ function ProfileContent() {
   const [message, setMessage] = useState('')
   const [uploading, setUploading] = useState(false)
   const [isCEO, setIsCEO] = useState(false)
+  const [referralLink, setReferralLink] = useState('')
 
   useEffect(() => {
     loadProfile()
+  }, [])
+
+  useEffect(() => {
+    supabase.auth.getSession().then(async ({ data }) => {
+      if (!data.session) return
+      const res = await fetch('/api/referral', { headers: { Authorization: `Bearer ${data.session.access_token}` } })
+      if (res.ok) {
+        const json = await res.json()
+        setReferralLink(json.referralLink || '')
+      }
+    })
   }, [])
 
   useEffect(() => {
@@ -136,9 +148,21 @@ function ProfileContent() {
           {message && (
             <p className={`text-sm ${message.startsWith('Profile') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>{message}</p>
           )}
+          {referralLink && (
+            <div className="rounded-xl border border-border bg-muted/30 p-4">
+              <label className="block text-sm font-medium text-foreground mb-2">Your referral link</label>
+              <p className="text-xs text-muted-foreground mb-2">Earn commission when sellers sign up with your link.</p>
+              <div className="flex gap-2">
+                <input readOnly value={referralLink} className="flex-1 px-3 py-2 rounded-lg border border-border bg-background text-sm text-foreground" />
+                <button type="button" onClick={() => { navigator.clipboard.writeText(referralLink); setMessage('Link copied!'); setTimeout(() => setMessage(''), 2000); }} className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:opacity-90">
+                  Copy
+                </button>
+              </div>
+            </div>
+          )}
           <div className="flex flex-wrap gap-3">
             <button type="submit" disabled={saving}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 disabled:opacity-50">
+              className="btn-saas px-4 py-2 bg-primary text-primary-foreground rounded-xl hover:opacity-90 disabled:opacity-50">
               {saving ? 'Saving...' : 'Save profile'}
             </button>
             <Link href="/dashboard" className="px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted">

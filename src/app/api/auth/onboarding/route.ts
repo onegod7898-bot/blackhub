@@ -20,16 +20,32 @@ export async function POST(request: NextRequest) {
 
     const role = (user.user_metadata?.role as string) || 'buyer'
     const country = (user.user_metadata?.country as string) || 'NG'
+    let refCode = ''
+    try {
+      const body = await request.json()
+      refCode = (body?.refCode as string) || ''
+    } catch {
+      // No body or invalid JSON
+    }
 
     if (!supabaseAdmin) {
       return NextResponse.json({ error: 'Server config error' }, { status: 500 })
     }
 
+    let referredBy: string | null = null
+    if (refCode) {
+      const { data: referrer } = await supabaseAdmin.from('profiles').select('id').eq('referral_code', refCode).single()
+      if (referrer) referredBy = referrer.id
+    }
+
+    const referralCode = 'BH' + Math.random().toString(36).slice(2, 10).toUpperCase()
     await supabaseAdmin.from('profiles').upsert({
       id: user.id,
       email: user.email,
       role: ['seller', 'buyer'].includes(role) ? role : 'buyer',
       country: ['NG', 'INT'].includes(country) ? country : 'NG',
+      referral_code: referralCode,
+      referred_by: referredBy,
       updated_at: new Date().toISOString(),
     }, { onConflict: 'id' })
 
@@ -44,6 +60,19 @@ export async function POST(request: NextRequest) {
         payment_provider: 'paystack',
         updated_at: new Date().toISOString(),
       }, { onConflict: 'user_id' })
+
+      if (referredBy) {
+        const commissionCents = 500
+        await supabaseAdmin.from('referral_earnings').insert({
+          referrer_id: referredBy,
+          referred_id: user.id,
+          amount_cents: commissionCents,
+          source: 'seller_signup',
+        })
+        const { data: refProf } = await supabaseAdmin.from('profiles').select('referral_earnings_cents').eq('id', referredBy).single()
+        const current = (refProf?.referral_earnings_cents || 0) + commissionCents
+        await supabaseAdmin.from('profiles').update({ referral_earnings_cents: current, updated_at: new Date().toISOString() }).eq('id', referredBy)
+      }
     }
 
     if (user.email) {

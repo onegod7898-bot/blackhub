@@ -7,6 +7,7 @@ import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import BottomNav from '@/components/BottomNav'
 import Logo from '@/components/Logo'
+import VerifiedBadge from '@/components/VerifiedBadge'
 
 export default function SellerProfilePage() {
   const params = useParams()
@@ -19,7 +20,7 @@ export default function SellerProfilePage() {
     if (!id) return
     supabase
       .from('profiles')
-      .select('display_name, company_name, avatar_url')
+      .select('display_name, company_name, avatar_url, verified_seller')
       .eq('id', id)
       .single()
       .then(({ data }) => {
@@ -53,13 +54,16 @@ export default function SellerProfilePage() {
         <ThemeToggle />
       </nav>
       <div className="max-w-2xl mx-auto p-4">
-        <div className="bg-card rounded-2xl border border-border p-6 text-center mb-6">
+        <div className="card-feature rounded-2xl border border-border bg-card p-6 text-center mb-6 glass">
           {profile?.avatar_url ? (
             <img src={profile.avatar_url} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
           ) : (
             <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center text-4xl mx-auto mb-4">👤</div>
           )}
-          <h1 className="text-xl font-bold text-foreground">{sellerName}</h1>
+          <div className="flex items-center justify-center gap-2">
+            <h1 className="text-xl font-bold text-foreground">{sellerName}</h1>
+            {profile?.verified_seller && <VerifiedBadge size="md" />}
+          </div>
           {profile?.company_name && profile?.display_name && (
             <p className="text-muted-foreground text-sm">{profile.company_name}</p>
           )}

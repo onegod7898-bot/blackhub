@@ -10,6 +10,7 @@ import BottomNav from '@/components/BottomNav'
 import ShareProductButton from '@/components/ShareProductButton'
 import ContactSellerForm from '@/components/ContactSellerForm'
 import Logo from '@/components/Logo'
+import VerifiedBadge from '@/components/VerifiedBadge'
 
 const PLAY_STORE_URL = process.env.NEXT_PUBLIC_PLAY_STORE_URL || 'https://play.google.com/store/apps/details?id=com.blackhub.app'
 
@@ -27,6 +28,7 @@ interface Profile {
   display_name: string | null
   company_name: string | null
   avatar_url: string | null
+  verified_seller?: boolean
 }
 
 export default function ProductDetailContent() {
@@ -51,7 +53,7 @@ export default function ProductDetailContent() {
         if (p?.seller_id) {
           const { data: s } = await supabase
             .from('profiles')
-            .select('display_name, company_name, avatar_url')
+            .select('display_name, company_name, avatar_url, verified_seller')
             .eq('id', p.seller_id)
             .single()
           setSeller(s)
@@ -129,15 +131,18 @@ export default function ProductDetailContent() {
           />
         </div>
 
-        <Link href={`/seller/${product.seller_id}`} className="block bg-card rounded-xl border border-border p-4 mb-6">
+        <Link href={`/seller/${product.seller_id}`} className="block card-feature rounded-2xl border border-border bg-card p-4 mb-6 glass">
           <div className="flex items-center gap-4">
             {seller?.avatar_url ? (
               <img src={seller.avatar_url} alt="" className="w-12 h-12 rounded-full object-cover" />
             ) : (
               <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-xl">👤</div>
             )}
-            <div>
-              <h3 className="font-semibold text-foreground">Seller: {sellerName}</h3>
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h3 className="font-semibold text-foreground">Seller: {sellerName}</h3>
+                {seller?.verified_seller && <VerifiedBadge size="sm" />}
+              </div>
               <p className="text-muted-foreground text-sm">View seller profile</p>
             </div>
           </div>

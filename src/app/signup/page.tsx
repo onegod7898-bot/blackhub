@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { supabase } from '@/lib/supabase'
 import { analytics } from '@/lib/analytics'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import Logo from '@/components/Logo'
 
-export default function SignupPage() {
+function SignupForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -18,14 +18,13 @@ export default function SignupPage() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const refCode = searchParams.get('ref') || ''
 
   useEffect(() => {
-    // Check if user is already logged in
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession()
-      if (session) {
-        router.push('/dashboard')
-      }
+      if (session) router.push('/dashboard')
     }
     checkUser()
   }, [router])
@@ -57,7 +56,11 @@ export default function SignupPage() {
       })
       if (authError) throw authError
       if (data.session) {
-        await fetch('/api/auth/onboarding', { method: 'POST', headers: { Authorization: `Bearer ${data.session.access_token}` } })
+        await fetch('/api/auth/onboarding', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${data.session.access_token}` },
+          body: JSON.stringify({ refCode: refCode || undefined }),
+        })
         analytics.userSignup({ role, country })
         if (role === 'seller') {
           analytics.sellerSignup({ country })
@@ -204,5 +207,17 @@ export default function SignupPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      </main>
+    }>
+      <SignupForm />
+    </Suspense>
   )
 }
