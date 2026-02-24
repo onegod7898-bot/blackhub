@@ -58,9 +58,9 @@ export default function SearchBar(props: SearchBarProps) {
       setLoading(true)
       try {
         const res = await fetch('/api/products?search=' + encodeURIComponent(query))
-        const data = await res.json()
+        const data = (await res.json()) as { products?: { name: string }[] }
         const products = data.products || []
-        const names = [...new Set(products.slice(0, 6).map((p: { name: string }) => p.name))]
+        const names: string[] = [...new Set(products.slice(0, 6).map((p) => p.name))]
         setSuggestions(names)
       } catch { setSuggestions([]) }
       finally { setLoading(false) }
