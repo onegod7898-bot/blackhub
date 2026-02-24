@@ -56,6 +56,20 @@ export async function POST(request: NextRequest) {
           sendEmailIfNotSent(meta.userId, u.email, 'subscription_confirmation', { plan: meta.plan }).catch(() => {})
         }
         sendPushSubscriptionSuccess(meta.userId, meta.plan).catch(() => {})
+
+        const { data: prof } = await supabaseAdmin.from('profiles').select('referred_by').eq('id', meta.userId).single()
+        if (prof?.referred_by && data.amount) {
+          const commissionCents = Math.max(500, Math.round((data.amount || 0) * 0.1))
+          await supabaseAdmin.from('referral_earnings').insert({
+            referrer_id: prof.referred_by,
+            referred_id: meta.userId,
+            amount_cents: commissionCents,
+            source: 'subscription',
+          })
+          const { data: refProf } = await supabaseAdmin.from('profiles').select('referral_earnings_cents').eq('id', prof.referred_by).single()
+          const current = (refProf?.referral_earnings_cents || 0) + commissionCents
+          await supabaseAdmin.from('profiles').update({ referral_earnings_cents: current, updated_at: new Date().toISOString() }).eq('id', prof.referred_by)
+        }
       }
     }
 

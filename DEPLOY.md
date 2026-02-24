@@ -46,12 +46,14 @@
    - `supabase/migrations/001_schema.sql`
    - `supabase/migrations/002_messages.sql`
    - `supabase/migrations/003_analytics_email_push.sql`
+   - `supabase/migrations/004_referrals_verified.sql`
+   - `supabase/migrations/005_orders.sql`
 
 2. Create storage buckets `avatars` and `products` if not created by migration.
 
 3. In Supabase → Authentication → URL Configuration:
    - Site URL: your production URL
-   - Redirect URLs: add your production URL + `/success`, `/login`, etc.
+   - Redirect URLs: add your production URL + `/success`, `/login`, `/signup`, etc.
 
 ---
 
