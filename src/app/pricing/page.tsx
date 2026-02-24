@@ -37,7 +37,7 @@ export default function PricingPage() {
       const res = await fetch('/api/checkout/subscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ plan, currency }),
+        body: JSON.stringify({ plan, currency, billing }),
       })
       const data = await res.json()
       if (data.authorizationUrl) window.location.href = data.authorizationUrl

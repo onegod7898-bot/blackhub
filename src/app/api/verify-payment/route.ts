@@ -31,7 +31,8 @@ export async function GET(request: NextRequest) {
       const meta = data.metadata || {}
       if (meta.type === 'subscription' && meta.userId && meta.plan) {
         const periodEnd = new Date()
-        periodEnd.setMonth(periodEnd.getMonth() + 1)
+        const months = meta.billing === 'yearly' ? 12 : 1
+        periodEnd.setMonth(periodEnd.getMonth() + months)
         const client = supabaseAdmin || supabase
         await client
           .from('subscriptions')

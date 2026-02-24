@@ -70,6 +70,18 @@ export default function AdminPage() {
     else alert((await res.json()).error)
   }
 
+  async function toggleVerify(userId: string, currentlyVerified: boolean) {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) return
+    const res = await fetch(`/api/admin/users/${userId}/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+      body: JSON.stringify({ verified: !currentlyVerified }),
+    })
+    if (res.ok) loadUsers()
+    else alert((await res.json()).error)
+  }
+
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-background p-6 pb-24">
@@ -150,8 +162,9 @@ export default function AdminPage() {
                       <th className="text-left p-4 text-foreground font-medium">Email</th>
                       <th className="text-left p-4 text-foreground font-medium">Role</th>
                       <th className="text-left p-4 text-foreground font-medium">Country</th>
+                      <th className="text-left p-4 text-foreground font-medium">Verified</th>
                       <th className="text-left p-4 text-foreground font-medium">Suspended</th>
-                      <th className="text-left p-4 text-foreground font-medium">Action</th>
+                      <th className="text-left p-4 text-foreground font-medium">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -160,8 +173,15 @@ export default function AdminPage() {
                         <td className="p-4 text-foreground">{u.email || u.id}</td>
                         <td className="p-4 text-muted-foreground">{u.role || '-'}</td>
                         <td className="p-4 text-muted-foreground">{u.country || '-'}</td>
+                        <td className="p-4">{u.verified_seller ? <span className="text-green-500">✓</span> : <span className="text-muted-foreground">-</span>}</td>
                         <td className="p-4">{u.suspended ? <span className="text-red-500">Yes</span> : <span className="text-green-500">No</span>}</td>
-                        <td className="p-4">
+                        <td className="p-4 flex flex-wrap gap-2">
+                          <button
+                            onClick={() => toggleVerify(u.id, u.verified_seller)}
+                            className={`px-3 py-1 text-sm rounded ${u.verified_seller ? 'bg-amber-500/20 text-amber-600' : 'bg-primary/20 text-primary'}`}
+                          >
+                            {u.verified_seller ? 'Unverify' : 'Verify'}
+                          </button>
                           <button
                             onClick={() => toggleSuspend(u.id, u.suspended)}
                             className={`px-3 py-1 text-sm rounded ${u.suspended ? 'bg-green-500/20 text-green-600' : 'bg-red-500/20 text-red-600'}`}

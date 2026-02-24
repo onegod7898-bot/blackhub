@@ -26,34 +26,46 @@ export async function GET(request: NextRequest) {
     .select('*', { count: 'exact', head: true })
     .eq('seller_id', user.id)
 
-  // Revenue & sales: placeholder until product sales table exists
-  const revenueCents = 0
-  const salesCount = 0
+  // Revenue & sales from orders (run migration 005_orders.sql if table missing)
+  const { data: ordersData } = await supabase.from('orders').select('amount_cents, created_at').eq('seller_id', user.id).in('status', ['paid', 'completed'])
+  const orders = ordersData || []
 
-  // Chart: last 7 days (placeholder trend)
+  const revenueCents = orders.reduce((s, o) => s + (o.amount_cents || 0), 0)
+  const salesCount = orders.length
+
+  // Chart: last 7 days revenue
   const chartData = Array.from({ length: 7 }, (_, i) => {
     const d = new Date()
     d.setDate(d.getDate() - (6 - i))
-    return {
-      date: d.toISOString().slice(0, 10),
-      revenue: Math.floor(10 + i * 5 + Math.random() * 20),
-    }
+    const dayStr = d.toISOString().slice(0, 10)
+    const dayRevenue = orders.filter((o) => o.created_at?.startsWith(dayStr)).reduce((s, o) => s + (o.amount_cents || 0) / 100, 0)
+    return { date: dayStr, revenue: Math.round(dayRevenue * 100) / 100 }
   })
 
-  // Recent transactions (from checkout_sessions - simplified)
+  // Recent transactions: orders + checkout_sessions
+  const { data: orderListData } = await supabase.from('orders').select('id, status, amount_cents, created_at').eq('seller_id', user.id).order('created_at', { ascending: false }).limit(5)
+  const orderList = orderListData || []
+
   const { data: sessions } = await supabase
     .from('checkout_sessions')
     .select('session_id, status, created_at')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
-    .limit(10)
+    .limit(5)
 
-  const transactions = (sessions || []).map((s) => ({
+  const orderTx = (orderList as { id: string; status: string; amount_cents?: number; created_at: string }[]).map((o) => ({
+    id: o.id,
+    status: o.status,
+    date: o.created_at,
+    amount: `$${((o.amount_cents ?? 0) / 100).toFixed(2)}`,
+  }))
+  const sessionTx = (sessions || []).map((s) => ({
     id: s.session_id,
     status: s.status,
     date: s.created_at,
     amount: '-',
   }))
+  const transactions = [...orderTx, ...sessionTx].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10)
 
   return NextResponse.json({
     revenue: revenueCents / 100,

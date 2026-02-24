@@ -18,17 +18,21 @@ export async function POST(request: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser(token)
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const { plan, currency = 'NGN' } = await request.json()
+    const { plan, currency = 'NGN', billing = 'monthly' } = await request.json()
     if (!plan || !['starter', 'pro'].includes(plan)) {
       return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
     }
 
     const planConfig = PLANS[plan as PlanKey]
     const isNgn = currency.toUpperCase() === 'NGN'
-    const amountSmallest = isNgn ? planConfig.ngn : planConfig.usd
     const currencyCode = isNgn ? 'NGN' : 'USD'
+    const isYearly = billing === 'yearly'
+    const yearlyDiscount = 0.2
+    const monthlyAmount = isNgn ? planConfig.ngn : planConfig.usd
+    const amountSmallest = isYearly ? Math.round(monthlyAmount * 12 * (1 - yearlyDiscount)) : monthlyAmount
 
-    const planCode = process.env[`PAYSTACK_PLAN_${plan.toUpperCase()}_${currencyCode}`]
+    const planKey = isYearly ? `PAYSTACK_PLAN_${plan.toUpperCase()}_${currencyCode}_YEARLY` : `PAYSTACK_PLAN_${plan.toUpperCase()}_${currencyCode}`
+    const planCode = process.env[planKey]
 
     const body: Record<string, unknown> = {
       email: user.email!,
@@ -45,6 +49,7 @@ export async function POST(request: NextRequest) {
       body.plan = planCode
     } else {
       body.amount = amountSmallest
+      if (isYearly) (body.metadata as Record<string, string>).billing = 'yearly'
     }
 
     const response = await paystackRequest('/transaction/initialize', {

@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   try {
     if (event.event === 'charge.success') {
       const data = event.data as {
-        metadata?: { userId?: string; plan?: string; type?: string }
+        metadata?: { userId?: string; plan?: string; type?: string; billing?: string }
         reference?: string
         amount?: number
         currency?: string
@@ -34,7 +34,8 @@ export async function POST(request: NextRequest) {
       const meta = data.metadata || {}
       if (meta.type === 'subscription' && meta.userId && meta.plan) {
         const periodEnd = new Date()
-        periodEnd.setMonth(periodEnd.getMonth() + 1)
+        const months = meta.billing === 'yearly' ? 12 : 1
+        periodEnd.setMonth(periodEnd.getMonth() + months)
         await supabaseAdmin
           .from('subscriptions')
           .update({

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { createClient } from '@supabase/supabase-js'
 
 const CEO_EMAIL = process.env.NEXT_PUBLIC_CEO_EMAIL || process.env.CEO_EMAIL
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const authHeader = request.headers.get('authorization')
   if (!authHeader?.startsWith('Bearer ')) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -21,18 +21,18 @@ export async function GET(request: NextRequest) {
   }
 
   if (!supabaseAdmin) {
-    return NextResponse.json({ error: 'Admin client not configured' }, { status: 500 })
+    return NextResponse.json({ error: 'Admin not configured' }, { status: 500 })
   }
 
-  try {
-    const { data: users, error } = await supabaseAdmin
-      .from('profiles')
-      .select('id, email, display_name, company_name, role, country, suspended, verified_seller, created_at')
-      .order('created_at', { ascending: false })
+  const { id } = await params
+  const body = await request.json().catch(() => ({}))
+  const verified = body.verified === true
 
-    if (error) throw error
-    return NextResponse.json({ users: users || [] })
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
-  }
+  const { error } = await supabaseAdmin
+    .from('profiles')
+    .update({ verified_seller: verified, updated_at: new Date().toISOString() })
+    .eq('id', id)
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  return NextResponse.json({ ok: true, verified })
 }
