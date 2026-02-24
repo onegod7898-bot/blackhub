@@ -7,10 +7,10 @@
 :root,
 .dark {
   --background: #0B0B0F;
-  --foreground: #F4F4F5;
-  --heading: #FAFAFA;
+  --foreground: #E2E8F0;
+  --heading: #FFFFFF;
   --card: #121218;
-  --card-foreground: #F4F4F5;
+  --card-foreground: #E2E8F0;
   --primary: #10B981;
   --primary-hover: #34D399;
   --primary-foreground: #FFFFFF;
@@ -74,9 +74,13 @@
   --color-ring: var(--ring);
   --font-sans: var(--font-inter), 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, monospace;
-  --radius-lg: 0.75rem;
+  --radius-lg: 1rem;
   --radius-xl: 1rem;
   --radius-2xl: 1rem;
+  --spacing-1: 8px;
+  --spacing-2: 16px;
+  --spacing-4: 32px;
+  --spacing-8: 64px;
 }
 
 @layer base {
@@ -84,6 +88,7 @@
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
+    font-size: 16px;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -92,6 +97,8 @@
   h1, h2, h3, h4, h5, h6 {
     color: var(--heading);
   }
+  .text-hero { font-size: clamp(2.25rem, 5vw, 3rem); }
+  .text-section { font-size: clamp(1.5rem, 2.5vw, 2rem); }
 }
 
 /* Navbar */
@@ -102,28 +109,29 @@
   border-bottom: 1px solid var(--border);
 }
 
-/* Buttons - emerald, subtle glow on hover */
+/* Buttons - 16px radius, bold, hover lift */
 .btn-primary {
-  border-radius: 0.75rem;
-  font-weight: 600;
+  border-radius: 1rem;
+  font-weight: 700;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .btn-primary:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 0 1px var(--primary), 0 4px 14px var(--primary-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px var(--primary), 0 8px 20px var(--primary-glow);
 }
 .btn-primary:active {
-  transform: scale(0.98);
+  transform: translateY(0);
   box-shadow: 0 0 0 1px var(--primary), 0 2px 8px var(--primary-glow);
 }
 
 .btn-secondary {
-  border-radius: 0.75rem;
-  font-weight: 500;
+  border-radius: 1rem;
+  font-weight: 600;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .btn-secondary:hover {
   background: var(--muted);
+  transform: translateY(-1px);
 }
 
 /* Cards - marketplace style */
@@ -166,6 +174,15 @@ select:focus {
 }
 .animate-dropdown {
   animation: dropdownSlide 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Staggered suggestion items */
+@keyframes suggestionItem {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-suggestion-item {
+  animation: suggestionItem 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* Skeleton loader */

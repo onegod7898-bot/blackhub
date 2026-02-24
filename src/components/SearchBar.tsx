@@ -4,6 +4,13 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 
 const POPULAR_SEARCHES = ['Digital products', 'Design services', 'Consulting', 'Courses', 'Software', 'Templates']
+const TOP_CATEGORIES = [
+  { id: 'electronics', label: 'Electronics' },
+  { id: 'fashion', label: 'Fashion' },
+  { id: 'digital', label: 'Digital' },
+  { id: 'services', label: 'Services' },
+  { id: 'general', label: 'General' },
+]
 const RECENT_KEY = 'blackhub-recent-searches'
 const MAX_RECENT = 5
 
@@ -85,9 +92,15 @@ export default function SearchBar(props: SearchBarProps) {
     else router.push('/explore?q=' + encodeURIComponent(q))
   }
 
+  const handleCategory = (catId: string) => {
+    setIsOpen(false)
+    router.push('/explore?category=' + catId)
+  }
+
   const showDropdown = isOpen
   const showPopular = isOpen && !query.trim() && recentSearches.length === 0
   const showRecent = isOpen && !query.trim() && recentSearches.length > 0
+  const showCategories = isOpen && !query.trim()
 
   return (
     <div ref={containerRef} className={'relative w-full ' + className}>
@@ -110,12 +123,12 @@ export default function SearchBar(props: SearchBarProps) {
       </div>
 
       {showDropdown && (
-        <div className="absolute top-full left-0 right-0 mt-2 rounded-xl border border-border bg-card shadow-xl overflow-hidden z-50 animate-dropdown" role="listbox">
+        <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl border border-border bg-card shadow-xl overflow-hidden z-50 animate-dropdown" role="listbox">
           {query.trim() && suggestions.length > 0 && (
             <div className="py-2">
-              <p className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">Suggestions</p>
-              {suggestions.map((s) => (
-                <button key={s} type="button" onClick={() => handleSubmit(s)} className="w-full px-4 py-3 text-left text-foreground hover:bg-muted/80 transition-colors flex items-center gap-3" role="option">
+              <p className="px-4 py-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">Suggestions</p>
+              {suggestions.map((s, i) => (
+                <button key={s} type="button" onClick={() => handleSubmit(s)} className="w-full px-4 py-3 text-left text-foreground hover:bg-muted/80 transition-colors flex items-center gap-3 animate-suggestion-item" style={{ animationDelay: `${i * 30}ms` }} role="option">
                   <svg className="w-4 h-4 text-muted-foreground shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
@@ -130,29 +143,41 @@ export default function SearchBar(props: SearchBarProps) {
               <button type="button" onClick={() => handleSubmit()} className="mt-3 text-primary font-medium text-sm hover:underline">Search anyway</button>
             </div>
           )}
+          {showPopular && (
+            <div className="py-2">
+              <p className="px-4 py-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">Trending</p>
+              <div className="flex flex-wrap gap-2 p-3">
+                {POPULAR_SEARCHES.map((s, i) => (
+                  <button key={s} type="button" onClick={() => handleSubmit(s)} className="px-4 py-2 rounded-xl bg-muted/60 text-foreground text-sm font-medium hover:bg-primary/20 hover:text-primary transition-all animate-suggestion-item" style={{ animationDelay: `${i * 40}ms` }} role="option">
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {showCategories && (
+            <div className="py-2 border-t border-border">
+              <p className="px-4 py-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">Top categories</p>
+              <div className="flex flex-wrap gap-2 p-3">
+                {TOP_CATEGORIES.map((c, i) => (
+                  <button key={c.id} type="button" onClick={() => handleCategory(c.id)} className="px-4 py-2 rounded-xl bg-muted/60 text-foreground text-sm font-medium hover:bg-primary/20 hover:text-primary transition-all animate-suggestion-item" style={{ animationDelay: `${i * 40}ms` }} role="option">
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           {showRecent && (
             <div className="py-2 border-t border-border">
-              <p className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">Recent</p>
-              {recentSearches.map((s) => (
-                <button key={s} type="button" onClick={() => handleSubmit(s)} className="w-full px-4 py-3 text-left text-foreground hover:bg-muted/80 transition-colors flex items-center gap-3" role="option">
+              <p className="px-4 py-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">Recent</p>
+              {recentSearches.map((s, i) => (
+                <button key={s} type="button" onClick={() => handleSubmit(s)} className="w-full px-4 py-3 text-left text-foreground hover:bg-muted/80 transition-colors flex items-center gap-3 animate-suggestion-item" style={{ animationDelay: `${i * 30}ms` }} role="option">
                   <svg className="w-4 h-4 text-muted-foreground shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   {s}
                 </button>
               ))}
-            </div>
-          )}
-          {showPopular && (
-            <div className="py-2">
-              <p className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">Popular</p>
-              <div className="flex flex-wrap gap-2 p-3">
-                {POPULAR_SEARCHES.map((s) => (
-                  <button key={s} type="button" onClick={() => handleSubmit(s)} className="px-3 py-1.5 rounded-lg bg-muted/80 text-foreground text-sm hover:bg-primary/20 hover:text-primary transition-colors" role="option">
-                    {s}
-                  </button>
-                ))}
-              </div>
             </div>
           )}
         </div>

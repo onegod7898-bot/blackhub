@@ -59,7 +59,7 @@ export default function PricingPage() {
   return (
     <main className="min-h-screen bg-background py-12 px-4 pb-24 animate-fade-in">
       <header className="sticky top-0 z-50 nav-premium">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <Logo />
             <div className="flex items-center gap-4">
@@ -69,10 +69,10 @@ export default function PricingPage() {
           </div>
         </div>
       </header>
-      <div className="max-w-5xl mx-auto mt-12">
-        <div className="text-center mb-14">
-          <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight">Simple pricing</h1>
-          <p className="text-muted-foreground mt-3 text-lg">Start selling free for 7 days. No card needed.</p>
+      <div className="max-w-[1280px] mx-auto mt-16 px-4">
+        <div className="text-center mb-16">
+          <h1 className="text-hero font-bold text-heading tracking-tight">Simple pricing</h1>
+          <p className="text-muted-foreground mt-4 text-base">Start selling free for 7 days. No card needed.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <div className="inline-flex rounded-2xl border border-border bg-card/50 p-1.5">
               <button
@@ -104,15 +104,15 @@ export default function PricingPage() {
             </div>
           </div>
         </div>
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-          <div className="group rounded-3xl border border-border bg-card/50 backdrop-blur-sm p-8 lg:p-10 transition-all hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5">
-            <h2 className="text-xl font-bold text-foreground mb-1">Starter</h2>
-            <p className="text-muted-foreground text-sm mb-6">For individuals</p>
-            <div className="mb-8">
-              <span className="text-4xl font-bold text-foreground tracking-tight">{starterDisplay}</span>
-              <span className="text-muted-foreground text-sm">/month</span>
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+          <div className="group card-elevated rounded-3xl border border-border bg-card p-8 lg:p-10 transition-all hover:scale-[1.02]">
+            <h2 className="text-section font-bold text-heading mb-1">Starter</h2>
+            <p className="text-muted-foreground text-base mb-8">For individuals</p>
+            <div className="mb-10">
+              <span className="text-4xl lg:text-5xl font-bold text-heading tracking-tight">{starterDisplay}</span>
+              <span className="text-muted-foreground text-base">/month</span>
             </div>
-            <ul className="space-y-4 mb-10 text-sm text-muted-foreground">
+            <ul className="space-y-5 mb-10 text-base text-muted-foreground">
               <li className="flex items-center gap-3">
                 <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
                   <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
@@ -142,27 +142,27 @@ export default function PricingPage() {
               <button
                 onClick={() => handleSubscribe('starter')}
                 disabled={!!loading}
-                className="w-full rounded-xl bg-primary py-3.5 text-primary-foreground font-semibold text-[15px] hover:opacity-95 active:scale-[0.98] transition-all disabled:opacity-50 shadow-lg shadow-primary/20"
+                className="btn-primary w-full rounded-2xl bg-primary py-4 text-primary-foreground font-bold text-base disabled:opacity-50 shadow-lg shadow-primary/20"
               >
-                {loading === 'starter' ? 'Redirecting...' : 'Subscribe with Paystack'}
+                {loading === 'starter' ? <span className="inline-flex items-center gap-2"><span className="spinner" />Redirecting...</span> : 'Subscribe with Paystack'}
               </button>
             ) : (
-              <Link href="/signup" className="block w-full rounded-xl bg-primary py-3.5 text-primary-foreground font-semibold text-[15px] text-center hover:opacity-95 active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
+              <Link href="/signup" className="btn-primary block w-full rounded-2xl bg-primary py-4 text-primary-foreground font-bold text-base text-center shadow-lg shadow-primary/20">
                 Start free trial
               </Link>
             )}
           </div>
-          <div className="relative rounded-3xl border-2 border-primary bg-card/80 backdrop-blur-sm p-8 lg:p-10 shadow-xl shadow-primary/10">
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground">
-              Most popular
+          <div className="relative card-elevated rounded-3xl border-2 border-primary bg-card p-8 lg:p-10 shadow-xl shadow-primary/10 transition-all hover:scale-[1.02]">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground shadow-lg">
+              Featured
             </div>
-            <h2 className="text-xl font-bold text-foreground mb-1">Pro</h2>
-            <p className="text-muted-foreground text-sm mb-6">For growing businesses</p>
-            <div className="mb-8">
-              <span className="text-4xl font-bold text-foreground tracking-tight">{proDisplay}</span>
-              <span className="text-muted-foreground text-sm">/month</span>
+            <h2 className="text-section font-bold text-heading mb-1">Pro</h2>
+            <p className="text-muted-foreground text-base mb-8">For growing businesses</p>
+            <div className="mb-10">
+              <span className="text-4xl lg:text-5xl font-bold text-heading tracking-tight">{proDisplay}</span>
+              <span className="text-muted-foreground text-base">/month</span>
             </div>
-            <ul className="space-y-4 mb-10 text-sm text-muted-foreground">
+            <ul className="space-y-5 mb-10 text-base text-muted-foreground">
               <li className="flex items-center gap-3">
                 <span className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
                   <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
@@ -198,12 +198,12 @@ export default function PricingPage() {
               <button
                 onClick={() => handleSubscribe('pro')}
                 disabled={!!loading}
-                className="w-full rounded-xl bg-primary py-3.5 text-primary-foreground font-semibold text-[15px] hover:opacity-95 active:scale-[0.98] transition-all disabled:opacity-50 shadow-lg shadow-primary/20"
+                className="btn-primary w-full rounded-2xl bg-primary py-4 text-primary-foreground font-bold text-base disabled:opacity-50 shadow-lg shadow-primary/20"
               >
-                {loading === 'pro' ? 'Redirecting...' : 'Subscribe with Paystack'}
+                {loading === 'pro' ? <span className="inline-flex items-center gap-2"><span className="spinner" />Redirecting...</span> : 'Subscribe with Paystack'}
               </button>
             ) : (
-              <Link href="/signup" className="block w-full rounded-xl bg-primary py-3.5 text-primary-foreground font-semibold text-[15px] text-center hover:opacity-95 active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
+              <Link href="/signup" className="btn-primary block w-full rounded-2xl bg-primary py-4 text-primary-foreground font-bold text-base text-center shadow-lg shadow-primary/20">
                 Start free trial
               </Link>
             )}

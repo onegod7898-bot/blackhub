@@ -81,17 +81,17 @@ export default function Home() {
       <Navbar transparent />
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero: Large search */}
-        <section className="pt-12 pb-16 lg:pt-16 lg:pb-20">
-          <div className="max-w-2xl mx-auto text-center mb-10">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-heading animate-fade-in">
+        <section className="pt-16 pb-20 lg:pt-20 lg:pb-24">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h1 className="text-hero font-bold tracking-tight text-heading animate-fade-in">
               The premium marketplace for{' '}
               <span className="text-primary">global sellers</span>
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground animate-fade-in-delay-1">
+            <p className="mt-6 text-base text-muted-foreground animate-fade-in-delay-1">
               Discover digital products, services, and subscriptions. List once, sell everywhere.
             </p>
           </div>
-          <div className="max-w-2xl mx-auto animate-fade-in-delay-2">
+          <div className="max-w-3xl mx-auto animate-fade-in-delay-2">
             <SearchBar large />
           </div>
         </section>
@@ -114,7 +114,7 @@ export default function Home() {
         {/* Featured services */}
         <section className="py-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-heading">Featured</h2>
+            <h2 className="text-section font-bold text-heading">Featured</h2>
             <Link href="/explore" className="text-sm font-medium text-primary hover:underline">
               View all
             </Link>
@@ -163,7 +163,7 @@ export default function Home() {
         {/* Trending digital products */}
         <section className="py-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-heading">Trending</h2>
+            <h2 className="text-section font-bold text-heading">Trending</h2>
             <Link href="/explore" className="text-sm font-medium text-primary hover:underline">
               View all
             </Link>
@@ -211,22 +211,22 @@ export default function Home() {
 
         {/* CTA */}
         <section className="py-16 lg:py-24">
-          <div className="rounded-2xl border border-border bg-card p-8 lg:p-12 text-center">
-            <h2 className="text-2xl font-bold text-heading mb-3">Ready to sell?</h2>
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+          <div className="rounded-2xl border border-border bg-card p-8 lg:p-12 text-center card-elevated">
+            <h2 className="text-section font-bold text-heading mb-4">Ready to sell?</h2>
+            <p className="text-muted-foreground mb-8 max-w-md mx-auto text-base">
               Join thousands of sellers. List products, get subscribers, grow your business. 7-day free trial.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/signup"
-                className="btn-primary inline-flex items-center rounded-xl bg-primary px-6 py-3.5 text-base font-semibold text-primary-foreground"
-              >
-                Start free trial
-              </Link>
-              <Link
-                href="/pricing"
-                className="btn-secondary inline-flex items-center rounded-xl border border-border px-6 py-3.5 text-base font-semibold text-foreground"
-              >
+        <Link
+                  href="/signup"
+                  className="btn-primary inline-flex items-center rounded-2xl bg-primary px-8 py-4 text-base font-bold text-primary-foreground"
+                >
+                  Start free trial
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="btn-secondary inline-flex items-center rounded-2xl border border-border px-8 py-4 text-base font-bold text-foreground"
+                >
                 View pricing
               </Link>
             </div>
